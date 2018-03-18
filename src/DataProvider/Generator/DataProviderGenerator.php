@@ -17,22 +17,30 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     private $parser;
 
     /**
-     * @var \Xervice\DataProvider\Generator\FileWriterInterface
+     * @var FileWriterInterface
      */
     private $fileWriter;
+
+    /**
+     * @var string
+     */
+    private $namespace;
 
     /**
      * DataProviderGenerator constructor.
      *
      * @param \Xervice\DataProvider\Parser\DataProviderParserInterface $parser
-     * @param \Xervice\DataProvider\Generator\FileWriterInterface $fileWriter
+     * @param FileWriterInterface $fileWriter
+     * @param string $namespace
      */
     public function __construct(
         DataProviderParserInterface $parser,
-        FileWriterInterface $fileWriter
+        FileWriterInterface $fileWriter,
+        string $namespace
     ) {
         $this->parser = $parser;
         $this->fileWriter = $fileWriter;
+        $this->namespace = $namespace;
     }
 
     /**
@@ -43,7 +51,7 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
         $fileGenerated = [];
 
         foreach ($this->parser->getDataProvider() as $providerName => $providerElements) {
-            $namespace = new PhpNamespace('DataProvider');
+            $namespace = new PhpNamespace($this->namespace);
             $dataProvider = $this->createDataProviderClass($providerName, $providerElements, $namespace);
             $this->fileWriter->writeToFile($dataProvider->getName() . '.php', (string)$namespace);
             $fileGenerated[] = $dataProvider->getName() . '.php';

@@ -26,7 +26,8 @@ class DataProviderFactory extends AbstractFactory
     {
         return new DataProviderGenerator(
             $this->createDataProviderParser(),
-            $this->createFileWriter()
+            $this->createFileWriter(),
+            $this->getConfig()->getDataProviderNamespace()
         );
     }
 
@@ -56,6 +57,7 @@ class DataProviderFactory extends AbstractFactory
     /**
      * @return \Xervice\DataProvider\Finder\DataProviderFinder
      * @throws \Xervice\Config\Exception\ConfigNotFound
+     * @throws \Xervice\DataProvider\Generator\Exception\GenerateDirectoryNotWriteable
      */
     public function createDataProviderFinder()
     {

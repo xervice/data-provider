@@ -21,8 +21,8 @@
   "autoload": {
     "psr-4": {
       "Xervice\\": "src/",
-      "XerviceTest\\": "tests/Xervice",
-      "DataProvider\\": "src/_generated"
+      "XerviceTest\\": "tests/Xervice/",
+      "DataProvider\\": "src/Generated/"
     }
   }
 }
