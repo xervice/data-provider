@@ -17,22 +17,25 @@ class XmlMerger implements XmlMergerInterface
     {
         $xml = simplexml_load_string($xml);
 
-        $dataProvider = $this->parseDataProvider($xml);
+        foreach ($xml->DataProvider as $xmlDataProvider) {
+            $dataProvider = $this->parseDataProvider($xmlDataProvider);
 
+            foreach ($xmlDataProvider->DataElement as $element) {
+                $fieldName = (string)$element->attributes()['name'];
 
-        foreach ($xml->DataProvider->DataElement as $element) {
-            $fieldName = (string)$element->attributes()['name'];
-
-            if (!isset($this->mergedXml[$dataProvider][$fieldName])) {
-                $this->mergedXml[$dataProvider][$fieldName] = $this->getElementData($element);
-            }
-            else {
-                $this->mergedXml[$dataProvider][$fieldName] = array_merge(
-                    $this->mergedXml[$dataProvider][$fieldName],
-                    $this->getElementData($element)
-                );
+                if (!isset($this->mergedXml[$dataProvider][$fieldName])) {
+                    $this->mergedXml[$dataProvider][$fieldName] = $this->getElementData($element);
+                }
+                else {
+                    $this->mergedXml[$dataProvider][$fieldName] = array_merge(
+                        $this->mergedXml[$dataProvider][$fieldName],
+                        $this->getElementData($element)
+                    );
+                }
             }
         }
+
+
     }
 
     /**
@@ -44,13 +47,13 @@ class XmlMerger implements XmlMergerInterface
     }
 
     /**
-     * @param \SimpleXMLElement $xml
+     * @param \SimpleXMLElement $xmlDataProvider
      *
      * @return string
      */
-    private function parseDataProvider(\SimpleXMLElement $xml)
+    private function parseDataProvider(\SimpleXMLElement $xmlDataProvider)
     {
-        $dataProvider = (string)$xml->DataProvider->attributes()['name'];
+        $dataProvider = (string)$xmlDataProvider->attributes()['name'];
         if (!isset($this->mergedXml[$dataProvider])) {
             $this->mergedXml[$dataProvider] = [];
         }

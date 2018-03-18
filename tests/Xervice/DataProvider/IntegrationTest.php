@@ -29,8 +29,8 @@ class IntegrationTest extends \Codeception\Test\Unit
         $this->getFacade()->cleanDataProvider();
         $this->assertEquals(
             [
-                'KeyValueCollectionDataProvider.php',
                 'KeyValueDataProvider.php',
+                'KeyValueCollectionDataProvider.php',
             ],
             $this->getFacade()->generateDataProvider()
         );

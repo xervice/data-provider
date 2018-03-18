@@ -10,4 +10,8 @@
         <DataElement name="Key" type="string"/>
         <DataElement name="Value" type="string"/>
     </DataProvider>
+
+    <DataProvider name="KeyValueCollection">
+        <DataElement name="KeyValues" singleton="KeyValue" type="KeyValue[]"/>
+    </DataProvider>
 </DataProviders>
