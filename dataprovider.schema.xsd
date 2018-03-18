@@ -1,0 +1,28 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="xervice:dataprovider-01" elementFormDefault="qualified">
+    <!--
+     XML Schema for the Xervice data provider schemes
+    -->
+    <xsd:element name="DataProviders">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="DataProvider" minOccurs="0" maxOccurs="unbounded">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="DataElement" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+                                    <xsd:attribute name="type" type="xsd:string" use="required"></xsd:attribute>
+                                    <xsd:attribute name="default" type="xsd:string" use="optional" default=""></xsd:attribute>
+                                    <xsd:attribute name="singleton" type="xsd:string" use="optional"></xsd:attribute>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                        <xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+                        <xsd:attribute name="deprecated" type="xsd:boolean" use="optional"></xsd:attribute>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>
