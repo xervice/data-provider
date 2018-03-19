@@ -13,16 +13,18 @@
   },
   "require": {
     "php": ">=7.1.0",
-    "xervice/core": "^1.3.1",
-    "xervice/console": "^1.0.2",
+    "xervice/core": "^1.0.0",
+    "xervice/console": "^1.0.0",
     "symfony/finder": "4.0.*",
     "nette/php-generator": "3.1.*"
   },
   "autoload": {
     "psr-4": {
-      "Xervice\\": "src/",
       "XerviceTest\\": "tests/Xervice/",
       "DataProvider\\": "src/Generated/"
+    },
+    "psr-0": {
+      "Xervice\\": "src/"
     }
   }
 }
