@@ -11,7 +11,7 @@ use Xervice\Console\Command\AbstractCommand;
 /**
  * @method \Xervice\DataProvider\DataProviderFacade getFacade()
  */
-class GenerateCommand extends AbstractCommand
+class CleanCommand extends AbstractCommand
 {
     protected function configure()
     {
