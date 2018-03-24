@@ -154,9 +154,9 @@ class XmlMerger implements XmlMergerInterface
     private function getDataProviderType(string $type): string
     {
         if ($type === 'AbstractDataProvider') {
-            $type = AbstractDataProvider::class;
+            $type = '\\' . AbstractDataProvider::class;
         } elseif ($type === 'AbstractDataProvider[]') {
-            $type = AbstractDataProvider::class . '[]';
+            $type = '\\' . AbstractDataProvider::class . '[]';
         } else {
             $type = '\DataProvider\\' . $type . 'DataProvider';
         }
