@@ -3,8 +3,6 @@
 
 namespace Xervice\DataProvider\Parser;
 
-use Xervice\DataProvider\DataProvider\AbstractDataProvider;
-
 class XmlMerger implements XmlMergerInterface
 {
     /**
@@ -140,29 +138,12 @@ class XmlMerger implements XmlMergerInterface
     private function getVariableType(string $type): string
     {
         if (!$this->isSimpleType($type)) {
-            $type = $this->getDataProviderType($type);
-        }
-
-        return $type;
-    }
-
-    /**
-     * @param string $type
-     *
-     * @return string
-     */
-    private function getDataProviderType(string $type): string
-    {
-        if ($type === 'AbstractDataProvider') {
-            $type = '\\' . AbstractDataProvider::class;
-        } elseif ($type === 'AbstractDataProvider[]') {
-            $type = '\\' . AbstractDataProvider::class . '[]';
-        } else {
             $type = '\DataProvider\\' . $type . 'DataProvider';
+            if (strpos($type, '[]') !== false) {
+                $type = str_replace('[]', '', $type) . '[]';
+            }
         }
-        if (strpos($type, '[]') !== false) {
-            $type = str_replace('[]', '', $type) . '[]';
-        }
+
         return $type;
     }
 }
