@@ -80,7 +80,6 @@ class XmlMerger implements XmlMergerInterface
         $singleton = (string)$element->attributes()['singleton'];
         if ($singleton !== '') {
             $data['singleton'] = (string)$element->attributes()['singleton'];
-            $data['singleton_type'] = $this->getVariableType((string)$element->attributes()['singleton']);
         }
 
         return $data;

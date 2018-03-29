@@ -121,7 +121,7 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
         if (isset($element['singleton']) && $element['singleton'] !== '') {
             $singleSetter = $dataProvider->addMethod('add' . $element['singleton'])
                                          ->addComment(
-                                             '@param ' . $element['singleton'] . ' $'
+                                             '@param ' . $element['type'] . ' $'
                                              . $element['singleton']
                                          )
                                          ->setVisibility('public')
@@ -130,7 +130,7 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
                                          );
 
             $singleSetter->addParameter($element['singleton'])
-                         ->setTypeHint($element['singleton_type']);
+                         ->setTypeHint($element['type']);
         }
     }
 
