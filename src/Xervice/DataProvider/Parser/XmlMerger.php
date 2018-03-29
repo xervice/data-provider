@@ -80,6 +80,7 @@ class XmlMerger implements XmlMergerInterface
         $singleton = (string)$element->attributes()['singleton'];
         if ($singleton !== '') {
             $data['singleton'] = (string)$element->attributes()['singleton'];
+            $data['singleton_type'] = $this->getSingleVariableType($type);
         }
 
         return $data;
@@ -140,6 +141,23 @@ class XmlMerger implements XmlMergerInterface
             $type = '\DataProvider\\' . $type . 'DataProvider';
             if (strpos($type, '[]') !== false) {
                 $type = str_replace('[]', '', $type) . '[]';
+            }
+        }
+
+        return $type;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return string
+     */
+    private function getSingleVariableType(string $type): string
+    {
+        if (!$this->isSimpleType($type)) {
+            $type = '\DataProvider\\' . $type . 'DataProvider';
+            if (strpos($type, '[]') !== false) {
+                $type = str_replace('[]', '', $type);
             }
         }
 

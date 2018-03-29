@@ -9,6 +9,9 @@ final class KeyValueCollectionDataProvider extends \Xervice\DataProvider\DataPro
 	/** @var \DataProvider\KeyValueDataProvider[] */
 	protected $KeyValues;
 
+	/** @var \DataProvider\KeyValueDataProvider */
+	protected $ChildValue;
+
 
 	/**
 	 * @return \DataProvider\KeyValueDataProvider[]
@@ -32,11 +35,41 @@ final class KeyValueCollectionDataProvider extends \Xervice\DataProvider\DataPro
 
 
 	/**
-	 * @param KeyValue $KeyValue
+	 * @param \DataProvider\KeyValueDataProvider $OneValue
 	 */
-	public function addKeyValue(KeyValueDataProvider $KeyValue)
+	public function addOneValue(KeyValueDataProvider $OneValue)
 	{
-		$this->KeyValues[] = $KeyValue;
+		$this->KeyValues[] = $OneValue;
+	}
+
+
+	/**
+	 * @return \DataProvider\KeyValueDataProvider
+	 */
+	public function getChildValue(): KeyValueDataProvider
+	{
+		return $this->ChildValue;
+	}
+
+
+	/**
+	 * @param \DataProvider\KeyValueDataProvider $ChildValue
+	 * @return KeyValueCollectionDataProvider
+	 */
+	public function setChildValue(KeyValueDataProvider $ChildValue)
+	{
+		$this->ChildValue = $ChildValue;
+
+		return $this;
+	}
+
+
+	/**
+	 * @param \DataProvider\KeyValueDataProvider $ChildValue
+	 */
+	public function addChildValue(KeyValueDataProvider $ChildValue)
+	{
+		$this->ChildValue[] = $ChildValue;
 	}
 
 
@@ -52,7 +85,16 @@ final class KeyValueCollectionDataProvider extends \Xervice\DataProvider\DataPro
 		    'type' => '\\DataProvider\\KeyValueDataProvider[]',
 		    'is_collection' => true,
 		    'is_dataprovider' => false,
-		    'singleton' => 'KeyValue',
+		    'singleton' => 'OneValue',
+		    'singleton_type' => '\\DataProvider\\KeyValueDataProvider',
+		  ),
+		  'ChildValue' =>
+		  array (
+		    'name' => 'ChildValue',
+		    'type' => '\\DataProvider\\KeyValueDataProvider',
+		    'is_collection' => false,
+		    'is_dataprovider' => true,
+		    'singleton' => 'ChildValue',
 		    'singleton_type' => '\\DataProvider\\KeyValueDataProvider',
 		  ),
 		);

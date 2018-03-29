@@ -59,7 +59,7 @@ abstract class AbstractDataProvider
                 foreach ($this->{$fieldname} as $child) {
                     $data[$element['name']][] = $child->toArray();
                 }
-            } else {
+            } elseif (isset($this->{$fieldname})) {
                 $data[$element['name']] = $this->{$fieldname};
             }
         }

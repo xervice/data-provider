@@ -12,6 +12,7 @@
     </DataProvider>
 
     <DataProvider name="KeyValueCollection">
-        <DataElement name="KeyValues" singleton="KeyValue" type="KeyValue[]"/>
+        <DataElement name="KeyValues" singleton="OneValue" type="KeyValue[]"/>
+        <DataElement name="ChildValue" singleton="ChildValue" type="KeyValue"/>
     </DataProvider>
 </DataProviders>
