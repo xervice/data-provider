@@ -88,6 +88,7 @@ final class KeyValueDataProvider extends \Xervice\DataProvider\DataProvider\Abst
 		  'Key' =>
 		  array (
 		    'name' => 'Key',
+		    'allownull' => false,
 		    'type' => 'string',
 		    'is_collection' => false,
 		    'is_dataprovider' => false,
@@ -95,6 +96,7 @@ final class KeyValueDataProvider extends \Xervice\DataProvider\DataProvider\Abst
 		  'Value' =>
 		  array (
 		    'name' => 'Value',
+		    'allownull' => false,
 		    'type' => 'string',
 		    'is_collection' => false,
 		    'is_dataprovider' => false,
@@ -102,6 +104,7 @@ final class KeyValueDataProvider extends \Xervice\DataProvider\DataProvider\Abst
 		  'Description' =>
 		  array (
 		    'name' => 'Description',
+		    'allownull' => false,
 		    'type' => 'string',
 		    'is_collection' => false,
 		    'is_dataprovider' => false,

@@ -56,7 +56,7 @@ final class KeyValueCollectionDataProvider extends \Xervice\DataProvider\DataPro
 	 * @param \DataProvider\KeyValueDataProvider $ChildValue
 	 * @return KeyValueCollectionDataProvider
 	 */
-	public function setChildValue(KeyValueDataProvider $ChildValue)
+	public function setChildValue(KeyValueDataProvider $ChildValue = null)
 	{
 		$this->ChildValue = $ChildValue;
 
@@ -82,6 +82,7 @@ final class KeyValueCollectionDataProvider extends \Xervice\DataProvider\DataPro
 		  'KeyValues' =>
 		  array (
 		    'name' => 'KeyValues',
+		    'allownull' => false,
 		    'type' => '\\DataProvider\\KeyValueDataProvider[]',
 		    'is_collection' => true,
 		    'is_dataprovider' => false,
@@ -91,6 +92,7 @@ final class KeyValueCollectionDataProvider extends \Xervice\DataProvider\DataPro
 		  'ChildValue' =>
 		  array (
 		    'name' => 'ChildValue',
+		    'allownull' => true,
 		    'type' => '\\DataProvider\\KeyValueDataProvider',
 		    'is_collection' => false,
 		    'is_dataprovider' => true,

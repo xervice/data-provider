@@ -28,7 +28,9 @@ abstract class AbstractDataProvider
             if (isset($data[$fieldname])) {
                 if ($element['is_dataprovider']) {
                     $dataProvider = new $element['type']();
-                    $dataProvider->fromArray($data[$fieldname]);
+                    if (is_array($data[$fieldname])) {
+                        $dataProvider->fromArray($data[$fieldname]);
+                    }
                 } elseif ($element['is_collection']) {
                     foreach ($data[$fieldname] as $childData) {
                         $dataProvider = new $element['singleton_type']();
@@ -53,7 +55,7 @@ abstract class AbstractDataProvider
         foreach ($provider->getElements() as $element) {
             $fieldname = $element['name'];
             if ($element['is_dataprovider']) {
-                $data[$element['name']] = $this->convertToArray($this->{$fieldname});
+                $data[$element['name']] = !isset($this->{$fieldname}) ?: $this->convertToArray($this->{$fieldname});
             } elseif ($element['is_collection']) {
                 $data[$element['name']] = [];
                 foreach ($this->{$fieldname} as $child) {

@@ -46,7 +46,7 @@ class IntegrationTest extends \Codeception\Test\Unit
         $list = new KeyValueCollectionDataProvider();
         $list->addOneValue($keyValue);
 
-        $list->setChildValue($keyValue);
+        $list->setChildValue(null);
 
         $resultData = $list->toArray();
 

@@ -108,8 +108,11 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
                                    . 'return $this;'
                                );
 
-        $setter->addParameter($element['name'])
-               ->setTypeHint($this->getTypeHint($element['type']));
+        $param = $setter->addParameter($element['name'])
+                        ->setTypeHint($this->getTypeHint($element['type']));
+        if ($element['allownull']) {
+            $param->setDefaultValue(null);
+        }
     }
 
     /**

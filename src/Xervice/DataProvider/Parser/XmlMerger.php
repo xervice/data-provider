@@ -72,6 +72,7 @@ class XmlMerger implements XmlMergerInterface
 
         $data = [
             'name'      => (string)$element->attributes()['name'],
+            'allownull'      => (bool)$element->attributes()['allownull'],
             'type'      => $this->getVariableType($type),
             'is_collection'  => $this->isCollection($type),
             'is_dataprovider' => $this->isDataProvider($type)
