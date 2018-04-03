@@ -6,13 +6,14 @@
   xsi:schemaLocation="xervice:dataprovider-01 http://static.xervice.online/schema/dataprovider.schema.xsd"
 >
 
-    <DataProvider name="KeyValue">
+    <DataProvider name="TestKeyValue">
         <DataElement name="Key" type="string"/>
         <DataElement name="Value" type="string"/>
+        <DataElement name="Default" type="string" default="Test"/>
     </DataProvider>
 
-    <DataProvider name="KeyValueCollection">
-        <DataElement name="KeyValues" singleton="OneValue" type="KeyValue[]"/>
-        <DataElement name="ChildValue" singleton="ChildValue" allownull="true" type="KeyValue"/>
+    <DataProvider name="TestKeyValueCollection">
+        <DataElement name="KeyValues" singleton="OneValue" type="TestKeyValue[]"/>
+        <DataElement name="ChildValue" singleton="ChildValue" allownull="true" type="TestKeyValue"/>
     </DataProvider>
 </DataProviders>

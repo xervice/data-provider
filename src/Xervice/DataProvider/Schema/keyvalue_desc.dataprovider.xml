@@ -6,7 +6,7 @@
   xsi:schemaLocation="xervice:dataprovider-01 http://static.xervice.online/schema/dataprovider.schema.xsd"
 >
 
-    <DataProvider name="KeyValue">
+    <DataProvider name="TestKeyValue">
         <DataElement name="Description" type="string"/>
     </DataProvider>
 </DataProviders>

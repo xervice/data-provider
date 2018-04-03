@@ -110,7 +110,9 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
 
         $param = $setter->addParameter($element['name'])
                         ->setTypeHint($this->getTypeHint($element['type']));
-        if ($element['allownull']) {
+        if ($element['default']) {
+            $param->setDefaultValue($element['default']);
+        } elseif ($element['allownull']) {
             $param->setDefaultValue(null);
         }
     }
@@ -143,9 +145,13 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
      */
     private function addProperty(ClassType $dataProvider, $element): void
     {
-        $dataProvider->addProperty($element['name'])
+        $property = $dataProvider->addProperty($element['name'])
                      ->setVisibility('protected')
                      ->addComment('@var ' . $element['type']);
+
+        if ($element['default']) {
+            $property->setValue($element['default']);
+        }
     }
 
     /**

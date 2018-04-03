@@ -4,13 +4,16 @@ namespace DataProvider;
 /**
  * Auto generated data provider
  */
-final class KeyValueDataProvider extends \Xervice\DataProvider\DataProvider\AbstractDataProvider
+final class TestKeyValueDataProvider extends \Xervice\DataProvider\DataProvider\AbstractDataProvider
 {
 	/** @var string */
 	protected $Key;
 
 	/** @var string */
 	protected $Value;
+
+	/** @var string */
+	protected $Default = 'Test';
 
 	/** @var string */
 	protected $Description;
@@ -27,7 +30,7 @@ final class KeyValueDataProvider extends \Xervice\DataProvider\DataProvider\Abst
 
 	/**
 	 * @param string $Key
-	 * @return KeyValueDataProvider
+	 * @return TestKeyValueDataProvider
 	 */
 	public function setKey(string $Key)
 	{
@@ -48,11 +51,32 @@ final class KeyValueDataProvider extends \Xervice\DataProvider\DataProvider\Abst
 
 	/**
 	 * @param string $Value
-	 * @return KeyValueDataProvider
+	 * @return TestKeyValueDataProvider
 	 */
 	public function setValue(string $Value)
 	{
 		$this->Value = $Value;
+
+		return $this;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getDefault(): string
+	{
+		return $this->Default;
+	}
+
+
+	/**
+	 * @param string $Default
+	 * @return TestKeyValueDataProvider
+	 */
+	public function setDefault(string $Default = 'Test')
+	{
+		$this->Default = $Default;
 
 		return $this;
 	}
@@ -69,7 +93,7 @@ final class KeyValueDataProvider extends \Xervice\DataProvider\DataProvider\Abst
 
 	/**
 	 * @param string $Description
-	 * @return KeyValueDataProvider
+	 * @return TestKeyValueDataProvider
 	 */
 	public function setDescription(string $Description)
 	{
@@ -89,6 +113,7 @@ final class KeyValueDataProvider extends \Xervice\DataProvider\DataProvider\Abst
 		  array (
 		    'name' => 'Key',
 		    'allownull' => false,
+		    'default' => '',
 		    'type' => 'string',
 		    'is_collection' => false,
 		    'is_dataprovider' => false,
@@ -97,6 +122,16 @@ final class KeyValueDataProvider extends \Xervice\DataProvider\DataProvider\Abst
 		  array (
 		    'name' => 'Value',
 		    'allownull' => false,
+		    'default' => '',
+		    'type' => 'string',
+		    'is_collection' => false,
+		    'is_dataprovider' => false,
+		  ),
+		  'Default' =>
+		  array (
+		    'name' => 'Default',
+		    'allownull' => false,
+		    'default' => 'Test',
 		    'type' => 'string',
 		    'is_collection' => false,
 		    'is_dataprovider' => false,
@@ -105,6 +140,7 @@ final class KeyValueDataProvider extends \Xervice\DataProvider\DataProvider\Abst
 		  array (
 		    'name' => 'Description',
 		    'allownull' => false,
+		    'default' => '',
 		    'type' => 'string',
 		    'is_collection' => false,
 		    'is_dataprovider' => false,

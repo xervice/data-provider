@@ -1,8 +1,8 @@
 <?php
 namespace XerviceTest\DataProvider;
 
-use DataProvider\KeyValueCollectionDataProvider;
-use DataProvider\KeyValueDataProvider;
+use DataProvider\TestKeyValueCollectionDataProvider;
+use DataProvider\TestKeyValueDataProvider;
 use Xervice\Core\Locator\Dynamic\DynamicLocator;
 
 /**
@@ -29,8 +29,8 @@ class IntegrationTest extends \Codeception\Test\Unit
         $this->getFacade()->cleanDataProvider();
         $this->assertEquals(
             [
-                'KeyValueDataProvider.php',
-                'KeyValueCollectionDataProvider.php',
+                'TestKeyValueDataProvider.php',
+                'TestKeyValueCollectionDataProvider.php',
             ],
             $this->getFacade()->generateDataProvider()
         );
@@ -40,22 +40,27 @@ class IntegrationTest extends \Codeception\Test\Unit
             'Value' => 'value'
         ];
 
-        $keyValue = new KeyValueDataProvider();
+        $keyValue = new TestKeyValueDataProvider();
         $keyValue->fromArray($testData);
 
-        $list = new KeyValueCollectionDataProvider();
+        $list = new TestKeyValueCollectionDataProvider();
         $list->addOneValue($keyValue);
 
         $list->setChildValue(null);
 
         $resultData = $list->toArray();
 
-        $list = new KeyValueCollectionDataProvider();
+        $list = new TestKeyValueCollectionDataProvider();
         $list->fromArray($resultData);
 
         $this->assertEquals(
             'test',
             $list->getKeyValues()[0]->getKey()
+        );
+
+        $this->assertEquals(
+            'Test',
+            $list->getKeyValues()[0]->getDefault()
         );
     }
 }
