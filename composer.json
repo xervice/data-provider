@@ -13,6 +13,7 @@
   },
   "require": {
     "php": ">=7.1.0",
+    "xervice/config": "dev-master",
     "xervice/core": "dev-master",
     "xervice/console": "dev-master",
     "symfony/finder": "4.0.*",
