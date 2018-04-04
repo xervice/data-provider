@@ -471,12 +471,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xervice/console.git",
-                "reference": "2241d9864a5982e55cdcfd2242aaa2de54d56979"
+                "reference": "6fcf498a602c6b4ff2f093e1ec95fd81af75ad05"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xervice/console/zipball/2241d9864a5982e55cdcfd2242aaa2de54d56979",
-                "reference": "2241d9864a5982e55cdcfd2242aaa2de54d56979",
+                "url": "https://api.github.com/repos/xervice/console/zipball/6fcf498a602c6b4ff2f093e1ec95fd81af75ad05",
+                "reference": "6fcf498a602c6b4ff2f093e1ec95fd81af75ad05",
                 "shasum": ""
             },
             "require": {
@@ -510,7 +510,7 @@
                     "email": "contact@mibexx.de"
                 }
             ],
-            "time": "2018-04-03T06:41:43+00:00"
+            "time": "2018-04-04T18:23:24+00:00"
         },
         {
             "name": "xervice/core",
@@ -518,12 +518,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xervice/core.git",
-                "reference": "1afaba8dacf41431012d2575a03c80e18f77d1a4"
+                "reference": "72a6f41661c14318d86d5f42bc82513ca445573a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xervice/core/zipball/1afaba8dacf41431012d2575a03c80e18f77d1a4",
-                "reference": "1afaba8dacf41431012d2575a03c80e18f77d1a4",
+                "url": "https://api.github.com/repos/xervice/core/zipball/72a6f41661c14318d86d5f42bc82513ca445573a",
+                "reference": "72a6f41661c14318d86d5f42bc82513ca445573a",
                 "shasum": ""
             },
             "require": {
@@ -556,7 +556,7 @@
                 }
             ],
             "description": "Xervice core functionality",
-            "time": "2018-04-03T06:37:56+00:00"
+            "time": "2018-04-04T18:20:42+00:00"
         }
     ],
     "packages-dev": [
