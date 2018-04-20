@@ -135,7 +135,9 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
         $param = $setter->addParameter($element['name'])
                         ->setTypeHint($this->getTypeHint($element['type']));
         if ($element['default']) {
-            $param->setDefaultValue($element['default']);
+            $default = $element['default'];
+            settype($default, $this->getTypeHint($element['type']));
+            $param->setDefaultValue($default);
         } elseif ($element['allownull']) {
             $param->setDefaultValue(null);
         }
