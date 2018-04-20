@@ -62,5 +62,20 @@ class IntegrationTest extends \Codeception\Test\Unit
             'Test',
             $list->getKeyValues()[0]->getDefault()
         );
+
+        $this->assertTrue(
+            $list->getKeyValues()[0]->hasKey()
+        );
+
+        $list->getKeyValues()[0]->unsetKey();
+        $dataTest = $list->getKeyValues()[0]->toArray();
+
+        $this->assertArrayNotHasKey(
+            'Key',
+            $dataTest
+        );
+        $this->assertFalse(
+            $list->getKeyValues()[0]->hasKey()
+        );
     }
 }
