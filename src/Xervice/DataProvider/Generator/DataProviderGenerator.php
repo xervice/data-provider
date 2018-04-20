@@ -94,6 +94,18 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
      * @param $dataProvider
      * @param $element
      */
+    private function addUnsetter(ClassType $dataProvider, $element): void
+    {
+        $dataProvider->addMethod('unset' . $element['name'])
+                    ->addComment('@return ' . $dataProvider->getName())
+                     ->setVisibility('public')
+                     ->setBody('$this->' . $element['name'] . ' = null;' . PHP_EOL . PHP_EOL . 'return $this;');
+    }
+
+    /**
+     * @param $dataProvider
+     * @param $element
+     */
     private function addSetter(ClassType $dataProvider, $element): void
     {
         $setter = $dataProvider->addMethod('set' . $element['name'])
@@ -196,6 +208,7 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
             $this->addProperty($dataProvider, $element);
             $this->addGetter($dataProvider, $element);
             $this->addSetter($dataProvider, $element);
+            $this->addUnsetter($dataProvider, $element);
             $this->addSingleSetter($element, $dataProvider);
         }
 
