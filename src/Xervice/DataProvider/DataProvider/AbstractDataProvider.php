@@ -54,15 +54,21 @@ abstract class AbstractDataProvider
         $data = [];
         foreach ($provider->getElements() as $element) {
             $fieldname = $element['name'];
-            if ($element['is_dataprovider']) {
-                $data[$element['name']] = !isset($this->{$fieldname}) ?: $this->convertToArray($this->{$fieldname});
-            } elseif ($element['is_collection']) {
-                $data[$element['name']] = [];
-                foreach ($this->{$fieldname} as $child) {
-                    $data[$element['name']][] = $child->toArray();
+            $hasMethod = 'has' . $fieldname;
+            if ($provider->$hasMethod()) {
+                $getMethod = 'get' . $fieldname;
+                if ($element['is_dataprovider'] && $provider->{$getMethod}() instanceof AbstractDataProvider) {
+                    $data[$fieldname] = $this->convertToArray($provider->{$getMethod}());
                 }
-            } elseif (isset($this->{$fieldname})) {
-                $data[$element['name']] = $this->{$fieldname};
+                elseif ($element['is_collection']) {
+                    $data[$fieldname] = [];
+                    foreach ($provider->{$getMethod}() as $child) {
+                        $data[$fieldname][] = $child->toArray();
+                    }
+                }
+                else {
+                    $data[$fieldname] = $provider->{$getMethod}();
+                }
             }
         }
 

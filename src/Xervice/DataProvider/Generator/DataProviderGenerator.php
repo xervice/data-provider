@@ -111,7 +111,7 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
         $dataProvider->addMethod('has' . $element['name'])
                      ->addComment('@return bool')
                      ->setVisibility('public')
-                     ->setBody('return $this->' . $element['name'] . ' !== null;');
+                     ->setBody('return ($this->' . $element['name'] . ' !== null && $this->' . $element['name'] . ' !== []);');
     }
 
     /**
