@@ -177,6 +177,8 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
 
         if ($element['default']) {
             $property->setValue($element['default']);
+        } elseif (strpos($element['type'], '[]') !== false) {
+            $property->setValue([]);
         }
     }
 
