@@ -31,6 +31,7 @@ abstract class AbstractDataProvider
                     if (is_array($data[$fieldname])) {
                         $dataProvider->fromArray($data[$fieldname]);
                     }
+                    $this->{$fieldname} = $dataProvider;
                 } elseif ($element['is_collection']) {
                     foreach ($data[$fieldname] as $childData) {
                         $dataProvider = new $element['singleton_type']();
