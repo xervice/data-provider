@@ -1,7 +1,11 @@
 Xervice: DataProvider
 ====
 
-Extens Xervice to create dataprovider schema files and dynamically generate classes from them.  
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/xervice/data-provider/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/xervice/data-provider/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/xervice/data-provider/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/xervice/data-provider/?branch=master)
+
+
+Extends Xervice to create dataprovider schema files and dynamically generate classes from them.
 
 ***Example:***
 ```xml
