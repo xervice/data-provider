@@ -18,10 +18,21 @@ class IntegrationTest extends \Codeception\Test\Unit
     protected $tester;
 
     /**
+     * @throws \Core\Locator\Dynamic\ServiceNotParseable
+     * @throws \Xervice\Config\Exception\ConfigNotFound
+     */
+    protected function _before()
+    {
+        $this->getFacade()->generateDataProvider();
+    }
+
+
+    /**
      * @group Xervice
      * @group DataProvider
      * @group Integration
      *
+     * @throws \Core\Locator\Dynamic\ServiceNotParseable
      * @throws \Xervice\Config\Exception\ConfigNotFound
      */
     public function testGeneration()
@@ -34,7 +45,13 @@ class IntegrationTest extends \Codeception\Test\Unit
             ],
             $this->getFacade()->generateDataProvider()
         );
+    }
 
+    /**
+     *
+     */
+    public function testToAndFromArray()
+    {
         $testData = [
             'Key' => 'test',
             'Value' => 'value'
@@ -78,4 +95,5 @@ class IntegrationTest extends \Codeception\Test\Unit
             $list->getKeyValues()[0]->hasKey()
         );
     }
+
 }
