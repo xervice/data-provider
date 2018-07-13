@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\DataProvider\Generator;
@@ -46,6 +47,7 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
 
     /**
      * @return array
+     * @throws \Nette\InvalidArgumentException
      */
     public function generate(): array
     {
@@ -65,7 +67,8 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
      * @param string $provider
      * @param \Nette\PhpGenerator\PhpNamespace $namespace
      *
-     * @return \Nette\PhpGenerator\ClassType
+     * @return ClassType
+     * @throws \Nette\InvalidArgumentException
      */
     private function createNewDataProvider($provider, PhpNamespace $namespace): ClassType
     {
@@ -146,8 +149,7 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
             $default = $element['default'];
             settype($default, $this->getTypeHint($element['type']));
             $param->setDefaultValue($default);
-        }
-        elseif ($element['allownull']) {
+        } elseif ($element['allownull']) {
             $param->setDefaultValue(null);
         }
     }
@@ -156,18 +158,23 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
      * @param $element
      * @param $dataProvider
      */
-    private function addSingleSetter($element, ClassType $dataProvider)
+    private function addSingleSetter($element, ClassType $dataProvider): void
     {
         if (isset($element['singleton']) && $element['singleton'] !== '') {
-            $singleSetter = $dataProvider->addMethod('add' . $element['singleton'])
-                                         ->addComment(
-                                             '@param ' . $element['singleton_type'] . ' $'
-                                             . $element['singleton']
-                                         )
-                                         ->setVisibility('public')
-                                         ->setBody(
-                                             '$this->' . $element['name'] . '[] = $' . $element['singleton'] . ';'
-                                         );
+            $singleSetter = $dataProvider
+                ->addMethod('add' . $element['singleton'])
+                ->addComment(
+                    '@param ' . $element['singleton_type'] . ' $'
+                    . $element['singleton']
+                )
+                ->setVisibility('public')
+                ->setBody(
+                    sprintf(
+                        '$this->%s[] = $%s;',
+                        $element['name'],
+                        $element['singleton']
+                    )
+                );
 
             $singleSetter->addParameter($element['singleton'])
                          ->setTypeHint($element['singleton_type']);
@@ -220,14 +227,18 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     }
 
     /**
-     * @param $providerName
-     * @param $providerElements
-     * @param $namespace
+     * @param string $providerName
+     * @param array $providerElements
+     * @param \Nette\PhpGenerator\PhpNamespace $namespace
      *
      * @return \Nette\PhpGenerator\ClassType
      */
-    private function createDataProviderClass($providerName, $providerElements, $namespace
-    ): \Nette\PhpGenerator\ClassType {
+    private function createDataProviderClass(
+        string $providerName,
+        array $providerElements,
+        PhpNamespace $namespace
+    ): ClassType
+    {
         $dataProvider = $this->createNewDataProvider($providerName, $namespace);
 
         foreach ($providerElements as $element) {

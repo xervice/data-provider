@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "efcc3a62705ad50791cdcab7d9143df6",
+    "content-hash": "d1b5ce8b2b06a6bd62b1f11de45c3839",
     "packages": [
         {
             "name": "nette/php-generator",
@@ -149,105 +149,6 @@
                 "validation"
             ],
             "time": "2018-05-02T17:16:08+00:00"
-        },
-        {
-            "name": "pimple/pimple",
-            "version": "v3.2.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/silexphp/Pimple.git",
-                "reference": "9e403941ef9d65d20cba7d54e29fe906db42cf32"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/9e403941ef9d65d20cba7d54e29fe906db42cf32",
-                "reference": "9e403941ef9d65d20cba7d54e29fe906db42cf32",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0",
-                "psr/container": "^1.0"
-            },
-            "require-dev": {
-                "symfony/phpunit-bridge": "^3.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Pimple": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                }
-            ],
-            "description": "Pimple, a simple Dependency Injection Container",
-            "homepage": "http://pimple.sensiolabs.org",
-            "keywords": [
-                "container",
-                "dependency injection"
-            ],
-            "time": "2018-01-21T07:42:36+00:00"
-        },
-        {
-            "name": "psr/container",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/container.git",
-                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/container/zipball/b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
-                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Container\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
-                }
-            ],
-            "description": "Common Container Interface (PHP FIG PSR-11)",
-            "homepage": "https://github.com/php-fig/container",
-            "keywords": [
-                "PSR-11",
-                "container",
-                "container-interface",
-                "container-interop",
-                "psr"
-            ],
-            "time": "2017-02-14T16:28:37+00:00"
         },
         {
             "name": "symfony/console",
@@ -427,16 +328,16 @@
         },
         {
             "name": "xervice/config",
-            "version": "1.0.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xervice/config.git",
-                "reference": "8af94c5b1918a31403d49e23aa1849d465af9a78"
+                "reference": "5a4f88054dd8632bd19e67e68c227bd533b1e69e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xervice/config/zipball/8af94c5b1918a31403d49e23aa1849d465af9a78",
-                "reference": "8af94c5b1918a31403d49e23aa1849d465af9a78",
+                "url": "https://api.github.com/repos/xervice/config/zipball/5a4f88054dd8632bd19e67e68c227bd533b1e69e",
+                "reference": "5a4f88054dd8632bd19e67e68c227bd533b1e69e",
                 "shasum": ""
             },
             "require-dev": {
@@ -463,25 +364,25 @@
                 }
             ],
             "description": "Config environment to xervice components",
-            "time": "2018-07-05T08:14:26+00:00"
+            "time": "2018-07-13T18:15:54+00:00"
         },
         {
             "name": "xervice/console",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xervice/console.git",
-                "reference": "99339267476718d75e59ae8f0b04347d8d09ddbc"
+                "reference": "78db7bb89118bfc71eff5093f0c2893f352b4f10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xervice/console/zipball/99339267476718d75e59ae8f0b04347d8d09ddbc",
-                "reference": "99339267476718d75e59ae8f0b04347d8d09ddbc",
+                "url": "https://api.github.com/repos/xervice/console/zipball/78db7bb89118bfc71eff5093f0c2893f352b4f10",
+                "reference": "78db7bb89118bfc71eff5093f0c2893f352b4f10",
                 "shasum": ""
             },
             "require": {
                 "symfony/console": "4.0.*",
-                "xervice/core": "^1.0.0"
+                "xervice/core": "^2.0.1"
             },
             "require-dev": {
                 "codeception/codeception": "*",
@@ -509,26 +410,25 @@
                     "email": "contact@mibexx.de"
                 }
             ],
-            "time": "2018-07-05T08:21:43+00:00"
+            "time": "2018-07-13T19:24:36+00:00"
         },
         {
             "name": "xervice/core",
-            "version": "1.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xervice/core.git",
-                "reference": "db7e6b345f6069e745c28d03ec5a553b7a48c3a6"
+                "reference": "d073376b6ff116aa1700e74610b0ec346a18a68d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xervice/core/zipball/db7e6b345f6069e745c28d03ec5a553b7a48c3a6",
-                "reference": "db7e6b345f6069e745c28d03ec5a553b7a48c3a6",
+                "url": "https://api.github.com/repos/xervice/core/zipball/d073376b6ff116aa1700e74610b0ec346a18a68d",
+                "reference": "d073376b6ff116aa1700e74610b0ec346a18a68d",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1.0",
-                "pimple/pimple": "3.2.*",
-                "xervice/config": "^1.0.0"
+                "xervice/config": "^2.0.0"
             },
             "require-dev": {
                 "codeception/codeception": "*",
@@ -555,7 +455,7 @@
                 }
             ],
             "description": "Xervice core functionality",
-            "time": "2018-07-05T08:19:38+00:00"
+            "time": "2018-07-13T19:17:59+00:00"
         }
     ],
     "packages-dev": [
@@ -1927,16 +1827,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "3.0.1",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "591a30922f54656695e59b1f39501aec513403da"
+                "reference": "5de4fc177adf9bce8df98d8d141a7559d7ccf6da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/591a30922f54656695e59b1f39501aec513403da",
-                "reference": "591a30922f54656695e59b1f39501aec513403da",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/5de4fc177adf9bce8df98d8d141a7559d7ccf6da",
+                "reference": "5de4fc177adf9bce8df98d8d141a7559d7ccf6da",
                 "shasum": ""
             },
             "require": {
@@ -1987,7 +1887,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2018-06-14T15:05:28+00:00"
+            "time": "2018-07-12T15:12:46+00:00"
         },
         {
             "name": "sebastian/diff",

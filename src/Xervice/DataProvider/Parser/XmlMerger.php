@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\DataProvider\Parser;
@@ -11,11 +12,11 @@ class XmlMerger implements XmlMergerInterface
     private $mergedXml = [];
 
     /**
-     * @param string $xml
+     * @param string $xmlContent
      */
-    public function addXml(string $xml)
+    public function addXml(string $xmlContent): void
     {
-        $xml = simplexml_load_string($xml);
+        $xml = \simplexml_load_string($xmlContent);
 
         foreach ($xml->DataProvider as $xmlDataProvider) {
             $dataProvider = $this->parseDataProvider($xmlDataProvider);
@@ -23,14 +24,13 @@ class XmlMerger implements XmlMergerInterface
             foreach ($xmlDataProvider->DataElement as $element) {
                 $fieldName = (string)$element->attributes()['name'];
 
-                if (!isset($this->mergedXml[$dataProvider][$fieldName])) {
-                    $this->mergedXml[$dataProvider][$fieldName] = $this->getElementData($element);
-                }
-                else {
+                if (isset($this->mergedXml[$dataProvider][$fieldName])) {
                     $this->mergedXml[$dataProvider][$fieldName] = array_merge(
                         $this->mergedXml[$dataProvider][$fieldName],
                         $this->getElementData($element)
                     );
+                } else {
+                    $this->mergedXml[$dataProvider][$fieldName] = $this->getElementData($element);
                 }
             }
         }
@@ -41,7 +41,7 @@ class XmlMerger implements XmlMergerInterface
     /**
      * @return array
      */
-    public function getData()
+    public function getData(): array
     {
         return $this->mergedXml;
     }
@@ -51,7 +51,7 @@ class XmlMerger implements XmlMergerInterface
      *
      * @return string
      */
-    private function parseDataProvider(\SimpleXMLElement $xmlDataProvider)
+    private function parseDataProvider(\SimpleXMLElement $xmlDataProvider): string
     {
         $dataProvider = (string)$xmlDataProvider->attributes()['name'];
         if (!isset($this->mergedXml[$dataProvider])) {
@@ -105,13 +105,7 @@ class XmlMerger implements XmlMergerInterface
      */
     private function isCollection(string $type) : bool
     {
-        if (!$this->isSimpleType($type)) {
-            if (strpos($type, '[]') !== false) {
-                return true;
-            }
-        }
-
-        return false;
+        return (!$this->isSimpleType($type) && (strpos($type, '[]') !== false));
     }
 
     /**

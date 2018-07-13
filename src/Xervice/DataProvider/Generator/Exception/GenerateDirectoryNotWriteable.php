@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\DataProvider\Generator\Exception;
@@ -16,7 +17,7 @@ class GenerateDirectoryNotWriteable extends XerviceException
      * @param int $code
      * @param \Throwable|null $previous
      */
-    public function __construct(string $message = "", int $code = 0, \Throwable $previous = null)
+    public function __construct(string $message = '', int $code = 0, \Throwable $previous = null)
     {
         $message = 'Generate directory is not writeable: ' . $message;
         parent::__construct($message, $code, $previous);

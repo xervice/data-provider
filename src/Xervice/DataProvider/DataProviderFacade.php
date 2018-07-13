@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\DataProvider;
@@ -13,17 +14,19 @@ class DataProviderFacade extends AbstractFacade
 {
     /**
      * @return array
-     * @throws \Xervice\Config\Exception\ConfigNotFound
+     * @throws \Nette\InvalidArgumentException
+     * @throws \Xervice\DataProvider\Generator\Exception\GenerateDirectoryNotWriteable
      */
-    public function generateDataProvider()
+    public function generateDataProvider(): array
     {
         return $this->getFactory()->createDataProviderGenerator()->generate();
     }
 
     /**
-     * @throws \Xervice\Config\Exception\ConfigNotFound
+     * @throws \InvalidArgumentException
+     * @throws \Xervice\DataProvider\Generator\Exception\GenerateDirectoryNotWriteable
      */
-    public function cleanDataProvider()
+    public function cleanDataProvider(): void
     {
         $this->getFactory()->createCleaner()->cleanGeneratedFiles();
     }

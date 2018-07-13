@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Xervice\DataProvider\Parser;
 
@@ -12,5 +13,5 @@ interface XmlMergerInterface
     /**
      * @return array
      */
-    public function getData();
+    public function getData(): array;
 }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\DataProvider\Parser;
@@ -35,6 +36,8 @@ class DataProviderParser implements DataProviderParserInterface
 
     /**
      * @return array
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
      */
     public function getDataProvider() : array
     {

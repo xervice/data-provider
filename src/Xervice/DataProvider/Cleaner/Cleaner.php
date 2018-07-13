@@ -1,11 +1,12 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\DataProvider\Cleaner;
 
 use Xervice\DataProvider\Finder\DataProviderFinder;
 
-class Cleaner
+class Cleaner implements CleanerInterface
 {
     /**
      * @var \Xervice\DataProvider\Finder\DataProviderFinder
@@ -22,6 +23,9 @@ class Cleaner
         $this->finder = $finder;
     }
 
+    /**
+     * @throws \InvalidArgumentException
+     */
     public function cleanGeneratedFiles() : void
     {
         foreach ($this->finder->getGeneratedFiles() as $dataProviderFile) {

@@ -13,7 +13,7 @@
   },
   "require": {
     "php": ">=7.1.0",
-    "xervice/console": "^1.0.0",
+    "xervice/console": "^1.1.0",
     "symfony/finder": "^4.1.1",
     "nette/php-generator": "3.1.*"
   },

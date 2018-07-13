@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\DataProvider\Finder;
@@ -7,7 +8,7 @@ namespace Xervice\DataProvider\Finder;
 use Symfony\Component\Finder\Finder;
 use Xervice\DataProvider\Generator\Exception\GenerateDirectoryNotWriteable;
 
-class DataProviderFinder
+class DataProviderFinder implements DataProviderFinderInterface
 {
     /**
      * @var array
@@ -43,6 +44,7 @@ class DataProviderFinder
 
     /**
      * @return \Symfony\Component\Finder\Finder
+     * @throws \InvalidArgumentException
      */
     public function getSchemaFiles() : Finder
     {
@@ -56,6 +58,7 @@ class DataProviderFinder
 
     /**
      * @return \Symfony\Component\Finder\Finder
+     * @throws \InvalidArgumentException
      */
     public function getGeneratedFiles() : Finder
     {

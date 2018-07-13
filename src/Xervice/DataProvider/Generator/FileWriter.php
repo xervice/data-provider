@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\DataProvider\Generator;
@@ -36,9 +37,10 @@ class FileWriter implements FileWriterInterface
      * @param $filename
      * @param $content
      */
-    public function writeToFile($filename, $content)
+    public function writeToFile($filename, $content): void
     {
-        file_put_contents($this->generatedPath . '/' . $filename, '<?php' . PHP_EOL . $content);
+        file_put_contents($this->generatedPath . '/' . $filename, '<?php
+declare(strict_types=1);' . PHP_EOL . $content);
     }
 
 

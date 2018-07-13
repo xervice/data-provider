@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Xervice\DataProvider\DataProvider;
@@ -13,9 +14,7 @@ abstract class AbstractDataProvider implements DataProviderInterface
      */
     public function toArray() : array
     {
-        $data = $this->convertToArray($this);
-
-        return $data;
+        return $this->convertToArray($this);
     }
 
     /**
@@ -28,7 +27,7 @@ abstract class AbstractDataProvider implements DataProviderInterface
             if (isset($data[$fieldname])) {
                 if ($element['is_dataprovider']) {
                     $dataProvider = new $element['type']();
-                    if (is_array($data[$fieldname])) {
+                    if (\is_array($data[$fieldname])) {
                         $dataProvider->fromArray($data[$fieldname]);
                     }
                     $this->{$fieldname} = $dataProvider;
