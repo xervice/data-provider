@@ -7,6 +7,7 @@ namespace Xervice\DataProvider\Generator;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpNamespace;
 use Xervice\DataProvider\DataProvider\AbstractDataProvider;
+use Xervice\DataProvider\DataProvider\DataProviderInterface;
 use Xervice\DataProvider\Parser\DataProviderParserInterface;
 
 class DataProviderGenerator implements DataProviderGeneratorInterface
@@ -72,6 +73,11 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
         $dataProvider
             ->setFinal()
             ->setExtends(AbstractDataProvider::class)
+            ->setImplements(
+                [
+                    DataProviderInterface::class
+                ]
+            )
             ->setComment('Auto generated data provider');
 
         return $dataProvider;
@@ -111,7 +117,9 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
         $dataProvider->addMethod('has' . $element['name'])
                      ->addComment('@return bool')
                      ->setVisibility('public')
-                     ->setBody('return ($this->' . $element['name'] . ' !== null && $this->' . $element['name'] . ' !== []);');
+                     ->setBody(
+                         'return ($this->' . $element['name'] . ' !== null && $this->' . $element['name'] . ' !== []);'
+                     );
     }
 
     /**
@@ -138,7 +146,8 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
             $default = $element['default'];
             settype($default, $this->getTypeHint($element['type']));
             $param->setDefaultValue($default);
-        } elseif ($element['allownull']) {
+        }
+        elseif ($element['allownull']) {
             $param->setDefaultValue(null);
         }
     }
@@ -172,12 +181,13 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     private function addProperty(ClassType $dataProvider, $element): void
     {
         $property = $dataProvider->addProperty($element['name'])
-                     ->setVisibility('protected')
-                     ->addComment('@var ' . $element['type']);
+                                 ->setVisibility('protected')
+                                 ->addComment('@var ' . $element['type']);
 
         if ($element['default']) {
             $property->setValue($element['default']);
-        } elseif (strpos($element['type'], '[]') !== false) {
+        }
+        elseif (strpos($element['type'], '[]') !== false) {
             $property->setValue([]);
         }
     }

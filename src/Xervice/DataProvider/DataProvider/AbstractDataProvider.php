@@ -6,7 +6,7 @@ namespace Xervice\DataProvider\DataProvider;
 /**
  * @method array getElements()
  */
-abstract class AbstractDataProvider
+abstract class AbstractDataProvider implements DataProviderInterface
 {
     /**
      * @return array
@@ -21,7 +21,7 @@ abstract class AbstractDataProvider
     /**
      * @param array $data
      */
-    public function fromArray(array $data)
+    public function fromArray(array $data): void
     {
         foreach ($this->getElements() as $element) {
             $fieldname = $element['name'];
@@ -46,11 +46,11 @@ abstract class AbstractDataProvider
     }
 
     /**
-     * @param \Xervice\DataProvider\DataProvider\AbstractDataProvider $provider
+     * @param \Xervice\DataProvider\DataProvider\DataProviderInterface $provider
      *
      * @return array
      */
-    private function convertToArray(AbstractDataProvider $provider) : array
+    private function convertToArray(DataProviderInterface $provider) : array
     {
         $data = [];
         foreach ($provider->getElements() as $element) {
@@ -58,7 +58,7 @@ abstract class AbstractDataProvider
             $hasMethod = 'has' . $fieldname;
             if ($provider->$hasMethod()) {
                 $getMethod = 'get' . $fieldname;
-                if ($element['is_dataprovider'] && $provider->{$getMethod}() instanceof AbstractDataProvider) {
+                if ($element['is_dataprovider'] && $provider->{$getMethod}() instanceof DataProviderInterface) {
                     $data[$fieldname] = $this->convertToArray($provider->{$getMethod}());
                 }
                 elseif ($element['is_collection']) {
