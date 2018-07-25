@@ -49,9 +49,9 @@ class IntegrationTest extends \Codeception\Test\Unit
         $this->getFacade()->cleanDataProvider();
         $this->assertEquals(
             [
-                'WildcardDataProvider.php',
                 'TestKeyValueDataProvider.php',
-                'TestKeyValueCollectionDataProvider.php'
+                'TestKeyValueCollectionDataProvider.php',
+                'WildcardDataProvider.php'
             ],
             $this->getFacade()->generateDataProvider()
         );

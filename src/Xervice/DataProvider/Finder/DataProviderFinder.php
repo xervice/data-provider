@@ -50,7 +50,7 @@ class DataProviderFinder implements DataProviderFinderInterface
     {
         $finder = new Finder();
 
-        $finder->files()->name('*.dataprovider.xml');
+        $finder->files()->name('*.dataprovider.xml')->sortByName();
         $finder->in($this->paths);
 
         return $finder;
@@ -64,7 +64,7 @@ class DataProviderFinder implements DataProviderFinderInterface
     {
         $finder = new Finder();
 
-        $finder->files()->name('*DataProvider.php');
+        $finder->files()->name('*DataProvider.php')->sortByName();
         $finder->in($this->generatedPath);
 
         return $finder;
