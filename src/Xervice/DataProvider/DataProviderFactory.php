@@ -69,7 +69,8 @@ class DataProviderFactory extends AbstractFactory
     {
         return new DataProviderFinder(
             $this->getConfig()->getPaths(),
-            $this->getConfig()->getGeneratedPath()
+            $this->getConfig()->getGeneratedPath(),
+            $this->getConfig()->getFilePattern()
         );
     }
 

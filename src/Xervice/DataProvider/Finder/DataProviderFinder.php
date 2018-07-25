@@ -21,17 +21,24 @@ class DataProviderFinder implements DataProviderFinderInterface
     private $generatedPath;
 
     /**
+     * @var string
+     */
+    private $filePattern;
+
+    /**
      * DataProviderFinder constructor.
      *
      * @param array $paths
      * @param string $generatedPath
+     * @param string $filePattern
      *
      * @throws \Xervice\DataProvider\Generator\Exception\GenerateDirectoryNotWriteable
      */
-    public function __construct(array $paths, string $generatedPath)
+    public function __construct(array $paths, string $generatedPath, string $filePattern)
     {
         $this->paths = $paths;
         $this->generatedPath = $generatedPath;
+        $this->filePattern = $filePattern;
 
         if (
             !is_writable($this->generatedPath)
@@ -50,7 +57,7 @@ class DataProviderFinder implements DataProviderFinderInterface
     {
         $finder = new Finder();
 
-        $finder->files()->name('*.dataprovider.xml')->sortByName();
+        $finder->files()->name($this->filePattern)->sortByName();
         $finder->in($this->paths);
 
         return $finder;

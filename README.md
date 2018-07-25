@@ -22,6 +22,7 @@ You have to define, where to search for schema files and where to create the DTO
 
 use Xervice\DataProvider\DataProviderConfig;
 
+$config[DataProviderConfig::FILE_PATTERN] = '*.dataprovider.xml'; // Default: *.dataprovider.xml
 $config[DataProviderConfig::DATA_PROVIDER_GENERATED_PATH] = dirname(__DIR__) . '/src/Generated';
 $config[DataProviderConfig::DATA_PROVIDER_PATHS] = [
     dirname(__DIR__) . '/src/',
@@ -29,7 +30,7 @@ $config[DataProviderConfig::DATA_PROVIDER_PATHS] = [
 ];
 ```
 
-It will search for all files like *.dataprovider.xml.
+It will search for all files like *.dataprovider.xml in that example.
 
 
 Define DTO

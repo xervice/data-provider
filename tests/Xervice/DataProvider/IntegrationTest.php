@@ -32,6 +32,8 @@ class IntegrationTest extends \Codeception\Test\Unit
                 __DIR__ . '/Schema'
             ]
         );
+
+        XerviceConfig::getInstance()->getConfig()->set(DataProviderConfig::FILE_PATTERN, '*.testprovider.xml');
         $this->getFacade()->generateDataProvider();
     }
 

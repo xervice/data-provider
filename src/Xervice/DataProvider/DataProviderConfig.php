@@ -15,6 +15,8 @@ class DataProviderConfig extends AbstractConfig
 
     public const DATA_PROVIDER_NAMESPACE = 'data.provider.namespace';
 
+    public const FILE_PATTERN = 'file.pattern';
+
     /**
      * @return array
      */
@@ -37,5 +39,13 @@ class DataProviderConfig extends AbstractConfig
     public function getDataProviderNamespace(): string
     {
         return $this->get(self::DATA_PROVIDER_NAMESPACE, 'DataProvider');
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilePattern(): string
+    {
+        return $this->get(self::FILE_PATTERN, '*.dataprovider.xml');
     }
 }
