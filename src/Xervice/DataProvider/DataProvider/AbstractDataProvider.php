@@ -23,9 +23,20 @@ abstract class AbstractDataProvider implements DataProviderInterface
     public function fromArray(array $data): void
     {
         foreach ($this->getElements() as $element) {
+
             $fieldname = $element['name'];
             if (isset($data[$fieldname])) {
-                if ($element['is_dataprovider']) {
+                if (strpos($element['type'], 'DataProviderInterface[]') !== false) {
+                    foreach ($data[$fieldname] as $childData) {
+                        $anyDataProvider = new AnyDataProvider();
+                        $anyDataProvider->fromArray($childData);
+                        $this->{$fieldname}[] = $anyDataProvider->getDataProvider();
+                    }
+                } elseif (strpos($element['type'], 'DataProviderInterface') !== false) {
+                    $anyDataProvider = new AnyDataProvider();
+                    $anyDataProvider->fromArray($data[$fieldname]);
+                    $this->{$fieldname} = $anyDataProvider->getDataProvider();
+                } elseif ($element['is_dataprovider']) {
                     $dataProvider = new $element['type']();
                     if (\is_array($data[$fieldname])) {
                         $dataProvider->fromArray($data[$fieldname]);
@@ -57,16 +68,26 @@ abstract class AbstractDataProvider implements DataProviderInterface
             $hasMethod = 'has' . $fieldname;
             if ($provider->$hasMethod()) {
                 $getMethod = 'get' . $fieldname;
-                if ($element['is_dataprovider'] && $provider->{$getMethod}() instanceof DataProviderInterface) {
+                if (strpos($element['type'], 'DataProviderInterface[]') !== false) {
+                    $data[$fieldname] = [];
+                    foreach ($provider->{$getMethod}() as $child) {
+                        $anyDataProvider = new AnyDataProvider($child);
+                        $data[$fieldname][] = $anyDataProvider->toArray();
+                    }
+                } elseif (
+                    strpos($element['type'], 'DataProviderInterface') !== false
+                    && $provider->{$getMethod}() instanceof DataProviderInterface
+                ) {
+                    $anyDataProvider = new AnyDataProvider($provider->{$getMethod}());
+                    $data[$fieldname] = $anyDataProvider->toArray();
+                } elseif ($element['is_dataprovider'] && $provider->{$getMethod}() instanceof DataProviderInterface) {
                     $data[$fieldname] = $this->convertToArray($provider->{$getMethod}());
-                }
-                elseif ($element['is_collection']) {
+                } elseif ($element['is_collection']) {
                     $data[$fieldname] = [];
                     foreach ($provider->{$getMethod}() as $child) {
                         $data[$fieldname][] = $child->toArray();
                     }
-                }
-                else {
+                } else {
                     $data[$fieldname] = $provider->{$getMethod}();
                 }
             }

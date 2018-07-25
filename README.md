@@ -5,7 +5,35 @@ Xervice: DataProvider
 [![Code Coverage](https://scrutinizer-ci.com/g/xervice/data-provider/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/xervice/data-provider/?branch=master)
 
 
-Extends Xervice to create dataprovider schema files and dynamically generate classes from them.
+Data transfer objects for xervice packages.
+
+Installation
+------------------
+```
+composer require xervice/data-provider
+```
+
+Configuration
+-------------------
+You have to define, where to search for schema files and where to create the DTOs.
+```php
+<?php
+
+use Xervice\DataProvider\DataProviderConfig;
+
+$config[DataProviderConfig::DATA_PROVIDER_GENERATED_PATH] = dirname(__DIR__) . '/src/Generated';
+$config[DataProviderConfig::DATA_PROVIDER_PATHS] = [
+    dirname(__DIR__) . '/src/',
+    dirname(__DIR__) . '/vendor/',
+];
+```
+
+It will search for all files like *.dataprovider.xml.
+
+
+Define DTO
+-------------------
+To define a data provider, you define them in an xml file.
 
 ***Example:***
 ```xml
@@ -24,7 +52,21 @@ Extends Xervice to create dataprovider schema files and dynamically generate cla
 </DataProviders>
 ```
 
-will be:
+***Possible data types:***
+* int
+* string
+* bool
+* double
+* array
+* DataProviderInterface
+* DataProviderInterface[]
+* <AnyNameOfDataProvider>
+
+With the type "DataProviderInterface" you can set any DataProvider.
+
+
+Use DTO
+--------
 
 ```php
     $dataProvider = new DataProvider\KeyValueDataProvider();

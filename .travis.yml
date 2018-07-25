@@ -1,0 +1,19 @@
+language: php
+
+php:
+  - '7.1'
+  - '7.2'
+
+before_install:
+  - composer global require hirak/prestissimo
+  - composer global require xervice/xervicecli
+
+install:
+  - composer install --no-progress --profile
+
+script:
+  - xervice da:ge
+  - vendor/bin/codecept run --coverage --coverage-xml
+
+after_success:
+  - php bin/ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml

@@ -3,7 +3,10 @@ namespace XerviceTest\DataProvider;
 
 use DataProvider\TestKeyValueCollectionDataProvider;
 use DataProvider\TestKeyValueDataProvider;
+use DataProvider\WildcardDataProvider;
+use Xervice\Config\XerviceConfig;
 use Xervice\Core\Locator\Dynamic\DynamicLocator;
+use Xervice\DataProvider\DataProviderConfig;
 
 /**
  * @method \Xervice\DataProvider\DataProviderFacade getFacade()
@@ -19,10 +22,16 @@ class IntegrationTest extends \Codeception\Test\Unit
 
     /**
      * @throws \Core\Locator\Dynamic\ServiceNotParseable
-     * @throws \Xervice\Config\Exception\ConfigNotFound
+     * @throws \Xervice\DataProvider\Generator\Exception\GenerateDirectoryNotWriteable
      */
     protected function _before()
     {
+        XerviceConfig::getInstance()->getConfig()->set(
+            DataProviderConfig::DATA_PROVIDER_PATHS,
+            [
+                __DIR__ . '/Schema'
+            ]
+        );
         $this->getFacade()->generateDataProvider();
     }
 
@@ -33,22 +42,25 @@ class IntegrationTest extends \Codeception\Test\Unit
      * @group Integration
      *
      * @throws \Core\Locator\Dynamic\ServiceNotParseable
-     * @throws \Xervice\Config\Exception\ConfigNotFound
+     * @throws \Xervice\DataProvider\Generator\Exception\GenerateDirectoryNotWriteable
      */
     public function testGeneration()
     {
         $this->getFacade()->cleanDataProvider();
         $this->assertEquals(
             [
+                'WildcardDataProvider.php',
                 'TestKeyValueDataProvider.php',
-                'TestKeyValueCollectionDataProvider.php',
+                'TestKeyValueCollectionDataProvider.php'
             ],
             $this->getFacade()->generateDataProvider()
         );
     }
 
     /**
-     *
+     * @group Xervice
+     * @group DataProvider
+     * @group Integration
      */
     public function testToAndFromArray()
     {
@@ -93,6 +105,72 @@ class IntegrationTest extends \Codeception\Test\Unit
         );
         $this->assertFalse(
             $list->getKeyValues()[0]->hasKey()
+        );
+    }
+
+    /**
+     * @group Xervice
+     * @group DataProvider
+     * @group Integration
+     */
+    public function testWildcard()
+    {
+        $dataProvider = new TestKeyValueDataProvider();
+        $dataProvider
+            ->setKey('myKey')
+            ->setValue('myVal')
+            ->setDescription('myDesc');
+
+        $wildcard = new WildcardDataProvider();
+        $wildcard
+            ->setOneDataProvider($dataProvider)
+            ->addDataProvider($dataProvider)
+            ->addDataProvider($dataProvider);
+
+        $myArray = $wildcard->toArray();
+
+        $this->assertEquals(
+            TestKeyValueDataProvider::class,
+            $myArray['OneDataProvider']['class']
+        );
+
+        $this->assertEquals(
+            'myDesc',
+            $myArray['OneDataProvider']['dataprovider']['Description']
+        );
+
+        $this->assertCount(
+            2,
+            $myArray['DataProviders']
+        );
+
+        $newWildcard = new WildcardDataProvider();
+        $newWildcard->fromArray($myArray);
+
+        $oneDataProvider = $newWildcard->getOneDataProvider();
+        $this->assertWildcardProvider($oneDataProvider);
+
+        foreach ($newWildcard->getDataProviders() as $dataProvider) {
+            $this->assertWildcardProvider($dataProvider);
+        }
+    }
+
+    /**
+     * @param $oneDataProvider
+     */
+    private function assertWildcardProvider($oneDataProvider): void
+    {
+        $this->assertEquals(
+            'myKey',
+            $oneDataProvider->getKey()
+        );
+        $this->assertEquals(
+            'myVal',
+            $oneDataProvider->getValue()
+        );
+        $this->assertEquals(
+            'myDesc',
+            $oneDataProvider->getDescription()
         );
     }
 

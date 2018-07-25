@@ -167,10 +167,11 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
                     '@param ' . $element['singleton_type'] . ' $'
                     . $element['singleton']
                 )
+                ->addComment('@return ' . $dataProvider->getName())
                 ->setVisibility('public')
                 ->setBody(
                     sprintf(
-                        '$this->%s[] = $%s;',
+                        '$this->%s[] = $%s; return $this;',
                         $element['name'],
                         $element['singleton']
                     )

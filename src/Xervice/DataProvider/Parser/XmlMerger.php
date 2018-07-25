@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Xervice\DataProvider\Parser;
 
+use Xervice\DataProvider\DataProvider\AnyDataProvider;
+use Xervice\DataProvider\DataProvider\DataProviderInterface;
+
 class XmlMerger implements XmlMergerInterface
 {
     /**
@@ -105,7 +108,7 @@ class XmlMerger implements XmlMergerInterface
      */
     private function isCollection(string $type) : bool
     {
-        return (!$this->isSimpleType($type) && (strpos($type, '[]') !== false));
+        return strpos($type, '[]') !== false;
     }
 
     /**
@@ -120,7 +123,11 @@ class XmlMerger implements XmlMergerInterface
             'string',
             'bool',
             'double',
-            'array'
+            'array',
+            'DataProviderInterface',
+            'DataProviderInterface[]',
+            DataProviderInterface::class,
+            DataProviderInterface::class . '[]'
         ];
 
         return \in_array($type, $validTypes, true);
@@ -135,9 +142,18 @@ class XmlMerger implements XmlMergerInterface
     {
         if (!$this->isSimpleType($type)) {
             $type = '\DataProvider\\' . $type . 'DataProvider';
-            if (strpos($type, '[]') !== false) {
-                $type = str_replace('[]', '', $type) . '[]';
-            }
+        }
+
+        if ($type === 'DataProviderInterface') {
+            $type = '\\' . DataProviderInterface::class;
+        }
+
+        if ($type === 'DataProviderInterface[]') {
+            $type = '\\' . DataProviderInterface::class . '[]';
+        }
+
+        if (strpos($type, '[]') !== false) {
+            $type = str_replace('[]', '', $type) . '[]';
         }
 
         return $type;
@@ -152,9 +168,18 @@ class XmlMerger implements XmlMergerInterface
     {
         if (!$this->isSimpleType($type)) {
             $type = '\DataProvider\\' . $type . 'DataProvider';
-            if (strpos($type, '[]') !== false) {
-                $type = str_replace('[]', '', $type);
-            }
+        }
+
+        if ($type === 'DataProviderInterface') {
+            $type = '\\' . DataProviderInterface::class;
+        }
+
+        if ($type === 'DataProviderInterface[]') {
+            $type = '\\' . DataProviderInterface::class . '[]';
+        }
+
+        if (strpos($type, '[]') !== false) {
+            $type = str_replace('[]', '', $type);
         }
 
         return $type;

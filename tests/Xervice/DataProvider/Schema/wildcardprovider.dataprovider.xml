@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<DataProviders
+  xmlns="xervice:dataprovider-01"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="xervice:dataprovider-01 http://static.xervice.online/schema/dataprovider.schema.xsd"
+>
+
+    <DataProvider name="Wildcard">
+        <DataElement name="OneDataProvider" type="DataProviderInterface"/>
+        <DataElement name="DataProviders" singleton="DataProvider" type="DataProviderInterface[]"/>
+    </DataProvider>
+
+</DataProviders>
