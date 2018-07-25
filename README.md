@@ -60,7 +60,7 @@ To define a data provider, you define them in an xml file.
 * array
 * DataProviderInterface
 * DataProviderInterface[]
-* <AnyNameOfDataProvider>
+* ___AnyNameOfDataProvider___
 
 With the type "DataProviderInterface" you can set any DataProvider.
 
