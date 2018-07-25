@@ -3,6 +3,7 @@ Xervice: DataProvider
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/xervice/data-provider/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/xervice/data-provider/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/xervice/data-provider/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/xervice/data-provider/?branch=master)
+[![Build Status](https://travis-ci.org/xervice/data-provider.svg?branch=master)](https://travis-ci.org/xervice/data-provider)
 
 
 Data transfer objects for xervice packages.
