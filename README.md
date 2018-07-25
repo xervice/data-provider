@@ -70,19 +70,27 @@ Use DTO
 
 ```php
     $dataProvider = new DataProvider\KeyValueDataProvider();
+
+    // Set values
     $dataProvider->setKey('keyname');
     $dataProvider->setValue('value');
+
+    // Get values
+    $dataProvider->getKey();
+
+    // Isset
+    $dataProvider->hasKey();
     
     // you can also work with arrays
-    
     $dataProvider->fromArray([
         'Key' => 'keyname',
         'Value' => 'value'
     ]);
     
     // and back to array
-    
     $dataArray = $dataProvider->toArray();
+
+
 ```
 
 ***Extend and sharing***
@@ -103,4 +111,24 @@ Multiple schame-files with the same DataProvider name will be merged. Also you c
         <DataElement name="Values" singleton="Value" type="Value[]"/>
     </DataProvider>
 </DataProviders>
+```
+
+***Using***
+```php
+<?php
+
+    $dto = new KeyValue();
+
+    $value = new Value();
+    $dto->addValue($value);
+
+    // List
+    $dto->setValues(
+        [
+            $value
+        ]
+    );
+
+    // Get List
+    $dto->getValues();
 ```
