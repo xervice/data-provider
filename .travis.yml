@@ -12,7 +12,7 @@ install:
   - composer install --no-progress --profile
 
 script:
-  - xervice da:ge
+  - ~/.composer/vendor/bin/xervice da:ge
   - vendor/bin/codecept run --coverage --coverage-xml
 
 after_success:
