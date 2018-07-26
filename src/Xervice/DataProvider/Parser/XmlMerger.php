@@ -123,6 +123,7 @@ class XmlMerger implements XmlMergerInterface
             'string',
             'bool',
             'double',
+            'float',
             'array',
             'DataProviderInterface',
             'DataProviderInterface[]',
