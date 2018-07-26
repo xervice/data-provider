@@ -10,6 +10,7 @@
         <DataElement name="Key" type="string"/>
         <DataElement name="Value" type="string" allownull="true"/>
         <DataElement name="Default" type="string" default="Test"/>
+        <DataElement name="IsActive" type="bool" default="false"/>
     </DataProvider>
 
     <DataProvider name="TestKeyValueCollection">

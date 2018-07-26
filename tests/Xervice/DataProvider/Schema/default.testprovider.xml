@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<DataProviders
+  xmlns="xervice:dataprovider-01"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="xervice:dataprovider-01 http://static.xervice.online/schema/dataprovider.schema.xsd"
+>
+
+    <DataProvider name="Default">
+        <DataElement name="String" default="Text" type="string"/>
+        <DataElement name="Number" default="5" type="int"/>
+        <DataElement name="Boolean" default="true" type="bool"/>
+        <DataElement name="Float" default="1.5" type="float"/>
+    </DataProvider>
+
+</DataProviders>

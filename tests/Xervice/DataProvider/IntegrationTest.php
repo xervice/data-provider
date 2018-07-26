@@ -1,6 +1,7 @@
 <?php
 namespace XerviceTest\DataProvider;
 
+use DataProvider\DefaultDataProvider;
 use DataProvider\TestKeyValueCollectionDataProvider;
 use DataProvider\TestKeyValueDataProvider;
 use DataProvider\WildcardDataProvider;
@@ -51,11 +52,36 @@ class IntegrationTest extends \Codeception\Test\Unit
         $this->getFacade()->cleanDataProvider();
         $this->assertEquals(
             [
+                'DefaultDataProvider.php',
                 'TestKeyValueDataProvider.php',
                 'TestKeyValueCollectionDataProvider.php',
                 'WildcardDataProvider.php'
             ],
             $this->getFacade()->generateDataProvider()
+        );
+    }
+
+    /**
+     * @group Xervice
+     * @group DataProvider
+     * @group Integration
+     */
+    public function testDataProviderDefautWithDefault()
+    {
+        $dataProvider = new DefaultDataProvider();
+
+        $this->assertTrue($dataProvider->getBoolean());
+        $this->assertEquals(
+            'Text',
+            $dataProvider->getString()
+        );
+        $this->assertEquals(
+            intval(5),
+            $dataProvider->getNumber()
+        );
+        $this->assertEquals(
+            floatval(1.5),
+            $dataProvider->getFloat()
         );
     }
 

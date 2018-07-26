@@ -150,10 +150,10 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
         $param = $setter->addParameter($element['name'])
                         ->setTypeHint($this->getTypeHint($element['type'], $element['allownull']));
         if ($element['default']) {
-            $default = $element['default'];
-            settype($default, $this->getTypeHint($element['type']));
+            $default = $this->getDefaultValue($element);
             $param->setDefaultValue($default);
-        } elseif ($element['allownull']) {
+        }
+        elseif ($element['allownull']) {
             $param->setDefaultValue(null);
         }
     }
@@ -197,7 +197,8 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
                                  ->addComment('@var ' . $element['type']);
 
         if ($element['default']) {
-            $property->setValue($element['default']);
+            $default = $this->getDefaultValue($element);
+            $property->setValue($default);
         }
         elseif (strpos($element['type'], '[]') !== false) {
             $property->setValue([]);
@@ -246,8 +247,7 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
         string $providerName,
         array $providerElements,
         PhpNamespace $namespace
-    ): ClassType
-    {
+    ): ClassType {
         $dataProvider = $this->createNewDataProvider($providerName, $namespace);
 
         foreach ($providerElements as $element) {
@@ -257,9 +257,26 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
             $this->addUnsetter($dataProvider, $element);
             $this->addHas($dataProvider, $element);
             $this->addSingleSetter($element, $dataProvider);
+
         }
 
         $this->addElementsGetter($dataProvider, $providerElements);
         return $dataProvider;
+    }
+
+    /**
+     * @param $element
+     *
+     * @return bool
+     */
+    private function getDefaultValue($element)
+    {
+        $default = $element['default'];
+        if ($element['type'] === 'bool' || $element['type'] === 'boolean') {
+            $default = $default === 'false' ? false : $default;
+            $default = $default === 'true' ? true : $default;
+        }
+        settype($default, $element['type']);
+        return $default;
     }
 }
