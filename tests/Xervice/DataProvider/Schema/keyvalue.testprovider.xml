@@ -8,7 +8,7 @@
 
     <DataProvider name="TestKeyValue">
         <DataElement name="Key" type="string"/>
-        <DataElement name="Value" type="string"/>
+        <DataElement name="Value" type="string" allownull="true"/>
         <DataElement name="Default" type="string" default="Test"/>
     </DataProvider>
 

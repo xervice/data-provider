@@ -64,6 +64,34 @@ class IntegrationTest extends \Codeception\Test\Unit
      * @group DataProvider
      * @group Integration
      */
+    public function testDataProviderWithNull()
+    {
+        $dataProvider = new TestKeyValueDataProvider();
+        $dataProvider
+            ->setKey('test')
+            ->setValue(null)
+            ->setDescription('Desc');
+
+        $this->assertEquals(
+            'test',
+            $dataProvider->getKey()
+        );
+
+        $this->assertNull(
+            $dataProvider->getValue()
+        );
+
+        $this->assertEquals(
+            'Desc',
+            $dataProvider->getDescription()
+        );
+    }
+
+    /**
+     * @group Xervice
+     * @group DataProvider
+     * @group Integration
+     */
     public function testToAndFromArray()
     {
         $testData = [

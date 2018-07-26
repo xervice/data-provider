@@ -6,6 +6,7 @@ namespace Xervice\DataProvider\Generator;
 
 
 use Nette\PhpGenerator\ClassType;
+use Nette\PhpGenerator\Helpers;
 use Nette\PhpGenerator\PhpNamespace;
 use Xervice\DataProvider\DataProvider\AbstractDataProvider;
 use Xervice\DataProvider\DataProvider\DataProviderInterface;
@@ -56,7 +57,10 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
         foreach ($this->parser->getDataProvider() as $providerName => $providerElements) {
             $namespace = new PhpNamespace($this->namespace);
             $dataProvider = $this->createDataProviderClass($providerName, $providerElements, $namespace);
-            $this->fileWriter->writeToFile($dataProvider->getName() . '.php', (string)$namespace);
+            $classContent = (string)$namespace;
+            $classContent = str_replace('\?', '?', $classContent);
+            $classContent = Helpers::tabsToSpaces($classContent, 4);
+            $this->fileWriter->writeToFile($dataProvider->getName() . '.php', $classContent);
             $fileGenerated[] = $dataProvider->getName() . '.php';
         }
 
@@ -96,7 +100,7 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
                      ->addComment('@return ' . $element['type'])
                      ->setVisibility('public')
                      ->setBody('return $this->' . $element['name'] . ';')
-                     ->setReturnType($this->getTypeHint($element['type']));
+                     ->setReturnType($this->getTypeHint($element['type'], $element['allownull']));
     }
 
     /**
@@ -144,7 +148,7 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
                                );
 
         $param = $setter->addParameter($element['name'])
-                        ->setTypeHint($this->getTypeHint($element['type']));
+                        ->setTypeHint($this->getTypeHint($element['type'], $element['allownull']));
         if ($element['default']) {
             $default = $element['default'];
             settype($default, $this->getTypeHint($element['type']));
@@ -205,10 +209,14 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
      *
      * @return string
      */
-    private function getTypeHint(string $type): string
+    private function getTypeHint(string $type, $allowNull = false): string
     {
         if (strpos($type, '[]') !== false) {
             $type = 'array';
+        }
+
+        if ($allowNull) {
+            $type = '?' . $type;
         }
 
         return $type;
