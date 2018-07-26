@@ -87,6 +87,10 @@ class IntegrationTest extends \Codeception\Test\Unit
             [],
             $dataProvider->getList()
         );
+        $this->assertEquals(
+            '',
+            $dataProvider->getEmptyText()
+        );
     }
 
     /**

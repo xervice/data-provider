@@ -8,6 +8,7 @@
 
     <DataProvider name="Default">
         <DataElement name="String" default="Text" type="string"/>
+        <DataElement name="EmptyText" default="''" type="string"/>
         <DataElement name="Number" default="5" type="int"/>
         <DataElement name="Boolean" default="true" type="bool"/>
         <DataElement name="Float" default="1.5" type="float"/>

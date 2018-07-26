@@ -68,6 +68,40 @@ To define a data provider, you define them in an xml file.
 With the type "DataProviderInterface" you can set any DataProvider.
 
 
+***Default values***
+You can define default values for the following types:
+* int
+* float
+* double
+* string
+* bool
+* array
+
+For the type array only an empty array is possible as default.
+If you want to define an empty string as default for the type string, you have to set the default to ''.
+
+```xml
+<?xml version="1.0"?>
+
+<DataProviders
+  xmlns="xervice:dataprovider-01"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="xervice:dataprovider-01 http://static.xervice.online/schema/dataprovider.schema.xsd"
+>
+
+    <DataProvider name="Default">
+        <DataElement name="String" default="Text" type="string"/>
+        <DataElement name="EmptyText" default="''" type="string"/>
+        <DataElement name="Number" default="5" type="int"/>
+        <DataElement name="Boolean" default="true" type="bool"/>
+        <DataElement name="Float" default="1.5" type="float"/>
+        <DataElement name="List" default="[]" type="array"/>
+    </DataProvider>
+
+</DataProviders>
+```
+
+
 Use DTO
 --------
 

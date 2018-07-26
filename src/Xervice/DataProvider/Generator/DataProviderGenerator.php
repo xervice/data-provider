@@ -275,9 +275,10 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
         if ($element['type'] === 'bool' || $element['type'] === 'boolean') {
             $default = $default === 'false' ? false : $default;
             $default = $default === 'true' ? true : $default;
-        }
-        if ($element['type'] === 'array') {
+        } elseif ($element['type'] === 'array') {
             $default = [];
+        } elseif ($element['type'] === 'string') {
+            $default = $default === '\'\'' ? '' : $default;
         }
         settype($default, $element['type']);
         return $default;
