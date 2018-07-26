@@ -83,6 +83,10 @@ class IntegrationTest extends \Codeception\Test\Unit
             floatval(1.5),
             $dataProvider->getFloat()
         );
+        $this->assertEquals(
+            [],
+            $dataProvider->getList()
+        );
     }
 
     /**

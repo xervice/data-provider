@@ -276,6 +276,9 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
             $default = $default === 'false' ? false : $default;
             $default = $default === 'true' ? true : $default;
         }
+        if ($element['type'] === 'array') {
+            $default = [];
+        }
         settype($default, $element['type']);
         return $default;
     }

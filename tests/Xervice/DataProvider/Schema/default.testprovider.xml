@@ -11,6 +11,7 @@
         <DataElement name="Number" default="5" type="int"/>
         <DataElement name="Boolean" default="true" type="bool"/>
         <DataElement name="Float" default="1.5" type="float"/>
+        <DataElement name="List" default="[]" type="array"/>
     </DataProvider>
 
 </DataProviders>
