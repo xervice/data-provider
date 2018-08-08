@@ -34,7 +34,8 @@ class DataProviderFactory extends AbstractFactory
         return new DataProviderGenerator(
             $this->createDataProviderParser(),
             $this->createFileWriter(),
-            $this->getConfig()->getDataProviderNamespace()
+            $this->getConfig()->getDataProviderNamespace(),
+            $this->getConfig()->getDataProviderExtends()
         );
     }
 

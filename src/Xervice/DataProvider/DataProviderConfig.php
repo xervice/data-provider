@@ -6,16 +6,27 @@ namespace Xervice\DataProvider;
 
 
 use Xervice\Core\Config\AbstractConfig;
+use Xervice\DataProvider\DataProvider\AbstractDataProvider;
 
 class DataProviderConfig extends AbstractConfig
 {
-    public const DATA_PROVIDER_PATHS = 'data.provider.paths';
+    public const DATA_PROVIDER_PATHS = 'dataprovider.data.provider.paths';
 
-    public const DATA_PROVIDER_GENERATED_PATH = 'data.provider.generated.path';
+    public const DATA_PROVIDER_GENERATED_PATH = 'dataprovider.data.provider.generated.path';
 
-    public const DATA_PROVIDER_NAMESPACE = 'data.provider.namespace';
+    public const DATA_PROVIDER_NAMESPACE = 'dataprovider.data.provider.namespace';
 
-    public const FILE_PATTERN = 'file.pattern';
+    public const FILE_PATTERN = 'dataprovider.file.pattern';
+
+    public const DATA_PROVIDER_EXTENDS = 'dataprovider.data.provider.extends';
+
+    /**
+     * @return string
+     */
+    public function getDataProviderExtends(): string
+    {
+        return $this->get(self::DATA_PROVIDER_EXTENDS, AbstractDataProvider::class);
+    }
 
     /**
      * @return array

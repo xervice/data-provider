@@ -8,7 +8,6 @@ namespace Xervice\DataProvider\Generator;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\Helpers;
 use Nette\PhpGenerator\PhpNamespace;
-use Xervice\DataProvider\DataProvider\AbstractDataProvider;
 use Xervice\DataProvider\DataProvider\DataProviderInterface;
 use Xervice\DataProvider\Parser\DataProviderParserInterface;
 
@@ -30,6 +29,11 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     private $namespace;
 
     /**
+     * @var string
+     */
+    private $dataProviderExtends;
+
+    /**
      * DataProviderGenerator constructor.
      *
      * @param \Xervice\DataProvider\Parser\DataProviderParserInterface $parser
@@ -39,11 +43,13 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     public function __construct(
         DataProviderParserInterface $parser,
         FileWriterInterface $fileWriter,
-        string $namespace
+        string $namespace,
+        string $dataProviderExtends
     ) {
         $this->parser = $parser;
         $this->fileWriter = $fileWriter;
         $this->namespace = $namespace;
+        $this->dataProviderExtends = $dataProviderExtends;
     }
 
     /**
@@ -79,7 +85,7 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
         $dataProvider = $namespace->addClass($provider . 'DataProvider');
         $dataProvider
             ->setFinal()
-            ->setExtends(AbstractDataProvider::class)
+            ->setExtends($this->dataProviderExtends)
             ->setImplements(
                 [
                     DataProviderInterface::class
