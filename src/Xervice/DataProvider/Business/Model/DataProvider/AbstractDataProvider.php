@@ -200,4 +200,9 @@ abstract class AbstractDataProvider implements DataProviderInterface
         }
         return $data;
     }
+
+    /**
+     * @return array
+     */
+    abstract protected function getElements(): array;
 }
