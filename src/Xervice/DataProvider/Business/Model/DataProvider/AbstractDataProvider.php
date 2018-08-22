@@ -12,7 +12,7 @@ abstract class AbstractDataProvider implements DataProviderInterface
     /**
      * @return array
      */
-    public function toArray() : array
+    public function toArray(): array
     {
         return $this->convertToArray($this);
     }
@@ -35,7 +35,7 @@ abstract class AbstractDataProvider implements DataProviderInterface
      *
      * @return array
      */
-    private function convertToArray(DataProviderInterface $provider) : array
+    private function convertToArray(DataProviderInterface $provider): array
     {
         $data = [];
         foreach ($provider->getElements() as $element) {
@@ -51,18 +51,21 @@ abstract class AbstractDataProvider implements DataProviderInterface
 
     /**
      * @param array $data
-     * @param $element
-     * @param $fieldname
+     * @param array $element
+     * @param string $fieldname
      */
-    private function setFieldFromArrayData(array $data, $element, $fieldname): void
+    private function setFieldFromArrayData(array $data, array $element, string $fieldname): void
     {
         if (strpos($element['type'], 'DataProviderInterface[]') !== false) {
             $this->setChildData($data, $fieldname);
-        } elseif (strpos($element['type'], 'DataProviderInterface') !== false) {
+        }
+        elseif (strpos($element['type'], 'DataProviderInterface') !== false) {
             $this->setAnyDataProviderValues($data, $fieldname);
-        } elseif ($element['is_dataprovider']) {
+        }
+        elseif ($element['is_dataprovider']) {
             $this->setOneDataProviderValue($data, $element, $fieldname);
-        } elseif ($element['is_collection']) {
+        }
+        elseif ($element['is_collection']) {
             $this->setCollectionValues($data, $element, $fieldname);
         }
         else {
@@ -72,38 +75,42 @@ abstract class AbstractDataProvider implements DataProviderInterface
 
     /**
      * @param \Xervice\DataProvider\Business\Model\DataProvider\DataProviderInterface $provider
-     * @param $fieldname
-     * @param $element
-     * @param $data
+     * @param string $fieldname
+     * @param array $element
+     * @param array $data
      *
      * @return mixed
      */
-    private function getDataFromFields(DataProviderInterface $provider, $fieldname, $element, $data)
+    private function getDataFromFields(DataProviderInterface $provider, string $fieldname, array $element, array $data)
     {
         $getMethod = 'get' . $fieldname;
         if (strpos($element['type'], 'DataProviderInterface[]') !== false) {
             $data = $this->getDataProviderCollectionData($provider, $fieldname, $data, $getMethod);
-        } elseif (
+        }
+        elseif (
             strpos($element['type'], 'DataProviderInterface') !== false
             && $provider->{$getMethod}() instanceof DataProviderInterface
         ) {
             $anyDataProvider = new AnyDataProvider($provider->{$getMethod}());
             $data[$fieldname] = $anyDataProvider->toArray();
-        } elseif ($element['is_dataprovider'] && $provider->{$getMethod}() instanceof DataProviderInterface) {
+        }
+        elseif ($element['is_dataprovider'] && $provider->{$getMethod}() instanceof DataProviderInterface) {
             $data[$fieldname] = $this->convertToArray($provider->{$getMethod}());
-        } elseif ($element['is_collection']) {
+        }
+        elseif ($element['is_collection']) {
             $data = $this->getCollectionData($provider, $fieldname, $data, $getMethod);
-        } else {
+        }
+        else {
             $data[$fieldname] = $provider->{$getMethod}();
         }
         return $data;
-}
+    }
 
     /**
      * @param array $data
-     * @param $fieldname
+     * @param string $fieldname
      */
-    private function setChildData(array $data, $fieldname): void
+    private function setChildData(array $data, string $fieldname): void
     {
         foreach ($data[$fieldname] as $childData) {
             $anyDataProvider = new AnyDataProvider();
@@ -114,9 +121,9 @@ abstract class AbstractDataProvider implements DataProviderInterface
 
     /**
      * @param array $data
-     * @param $fieldname
+     * @param string $fieldname
      */
-    private function setAnyDataProviderValues(array $data, $fieldname): void
+    private function setAnyDataProviderValues(array $data, string $fieldname): void
     {
         $anyDataProvider = new AnyDataProvider();
         $anyDataProvider->fromArray($data[$fieldname]);
@@ -125,10 +132,10 @@ abstract class AbstractDataProvider implements DataProviderInterface
 
     /**
      * @param array $data
-     * @param $element
-     * @param $fieldname
+     * @param array $element
+     * @param string $fieldname
      */
-    private function setOneDataProviderValue(array $data, $element, $fieldname): void
+    private function setOneDataProviderValue(array $data, array $element, string $fieldname): void
     {
         $dataProvider = new $element['type']();
         if (\is_array($data[$fieldname])) {
@@ -139,10 +146,10 @@ abstract class AbstractDataProvider implements DataProviderInterface
 
     /**
      * @param array $data
-     * @param $element
-     * @param $fieldname
+     * @param array $element
+     * @param string $fieldname
      */
-    private function setCollectionValues(array $data, $element, $fieldname): void
+    private function setCollectionValues(array $data, array $element, string $fieldname): void
     {
         foreach ($data[$fieldname] as $childData) {
             $dataProvider = new $element['singleton_type']();
@@ -153,36 +160,44 @@ abstract class AbstractDataProvider implements DataProviderInterface
 
     /**
      * @param \Xervice\DataProvider\Business\Model\DataProvider\DataProviderInterface $provider
-     * @param $fieldname
-     * @param $data
-     * @param $getMethod
+     * @param string $fieldname
+     * @param array $data
+     * @param string $getMethod
      *
-     * @return mixed
+     * @return array
      */
-    private function getDataProviderCollectionData(DataProviderInterface $provider, $fieldname, $data, $getMethod)
-    {
+    private function getDataProviderCollectionData(
+        DataProviderInterface $provider,
+        string $fieldname,
+        array $data,
+        string $getMethod
+    ): array {
         $data[$fieldname] = [];
         foreach ($provider->{$getMethod}() as $child) {
             $anyDataProvider = new AnyDataProvider($child);
             $data[$fieldname][] = $anyDataProvider->toArray();
         }
         return $data;
-}
+    }
 
     /**
      * @param \Xervice\DataProvider\Business\Model\DataProvider\DataProviderInterface $provider
-     * @param $fieldname
-     * @param $data
-     * @param $getMethod
+     * @param string $fieldname
+     * @param array $data
+     * @param string $getMethod
      *
-     * @return mixed
+     * @return array
      */
-    private function getCollectionData(DataProviderInterface $provider, $fieldname, $data, $getMethod)
-    {
+    private function getCollectionData(
+        DataProviderInterface $provider,
+        string $fieldname,
+        array $data,
+        string $getMethod
+    ): array {
         $data[$fieldname] = [];
         foreach ($provider->{$getMethod}() as $child) {
             $data[$fieldname][] = $child->toArray();
         }
         return $data;
-}
+    }
 }
