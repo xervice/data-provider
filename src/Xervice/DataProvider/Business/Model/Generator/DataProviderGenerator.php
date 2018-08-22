@@ -91,7 +91,8 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
                     DataProviderInterface::class
                 ]
             )
-            ->setComment('Auto generated data provider');
+            ->setComment('Auto generated data provider')
+        ;
 
         return $dataProvider;
     }
@@ -106,7 +107,8 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
                      ->addComment('@return ' . $element['type'])
                      ->setVisibility('public')
                      ->setBody('return $this->' . $element['name'] . ';')
-                     ->setReturnType($this->getTypeHint($element['type'], $element['allownull']));
+                     ->setReturnType($this->getTypeHint($element['type'], $element['allownull']))
+        ;
     }
 
     /**
@@ -118,7 +120,8 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
         $dataProvider->addMethod('unset' . $element['name'])
                      ->addComment('@return ' . $dataProvider->getName())
                      ->setVisibility('public')
-                     ->setBody('$this->' . $element['name'] . ' = null;' . PHP_EOL . PHP_EOL . 'return $this;');
+                     ->setBody('$this->' . $element['name'] . ' = null;' . PHP_EOL . PHP_EOL . 'return $this;')
+        ;
     }
 
     /**
@@ -132,7 +135,8 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
                      ->setVisibility('public')
                      ->setBody(
                          'return ($this->' . $element['name'] . ' !== null && $this->' . $element['name'] . ' !== []);'
-                     );
+                     )
+        ;
     }
 
     /**
@@ -151,10 +155,12 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
                                ->setBody(
                                    '$this->' . $element['name'] . ' = $' . $element['name'] . ';' . PHP_EOL . PHP_EOL
                                    . 'return $this;'
-                               );
+                               )
+        ;
 
         $param = $setter->addParameter($element['name'])
-                        ->setTypeHint($this->getTypeHint($element['type'], $element['allownull']));
+                        ->setTypeHint($this->getTypeHint($element['type'], $element['allownull']))
+        ;
         if ($element['default']) {
             $default = $this->getDefaultValue($element);
             $param->setDefaultValue($default);
@@ -185,10 +191,12 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
                         $element['name'],
                         $element['singleton']
                     )
-                );
+                )
+            ;
 
             $singleSetter->addParameter($element['singleton'])
-                         ->setTypeHint($element['singleton_type']);
+                         ->setTypeHint($element['singleton_type'])
+            ;
         }
     }
 
@@ -200,7 +208,8 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     {
         $property = $dataProvider->addProperty($element['name'])
                                  ->setVisibility('protected')
-                                 ->addComment('@var ' . $element['type']);
+                                 ->addComment('@var ' . $element['type'])
+        ;
 
         if ($element['default']) {
             $default = $this->getDefaultValue($element);
@@ -240,7 +249,8 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
                      ->setReturnType('array')
                      ->setVisibility('protected')
                      ->addComment('@return array')
-                     ->setBody('return ' . var_export($elements, true) . ';');
+                     ->setBody('return ' . var_export($elements, true) . ';')
+        ;
     }
 
     /**
@@ -279,14 +289,29 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     private function getDefaultValue($element)
     {
         $default = $element['default'];
-        if ($element['type'] === 'bool' || $element['type'] === 'boolean') {
-            $default = $default === 'false' ? false : $default;
-            $default = $default === 'true' ? true : $default;
-        } elseif ($element['type'] === 'array') {
-            $default = [];
-        } elseif ($element['type'] === 'string') {
-            $default = $default === '\'\'' ? '' : $default;
+
+        switch ($element['type']) {
+            case 'bool':
+            case 'boolean':
+                {
+                    $default = $default === 'false' ? false : $default;
+                    $default = $default === 'true' ? true : $default;
+                }
+                break;
+
+            case 'array':
+                {
+                    $default = [];
+                }
+                break;
+
+            case 'string':
+                {
+                    $default = $default === '\'\'' ? '' : $default;
+                }
+                break;
         }
+
         settype($default, $element['type']);
         return $default;
     }
