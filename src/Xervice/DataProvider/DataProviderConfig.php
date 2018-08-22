@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Xervice\DataProvider;
 
 
-use Xervice\Core\Config\AbstractConfig;
-use Xervice\DataProvider\DataProvider\AbstractDataProvider;
+use Xervice\Core\Business\Model\Config\AbstractConfig;
+use Xervice\DataProvider\Business\Model\DataProvider\AbstractDataProvider;
 
 class DataProviderConfig extends AbstractConfig
 {

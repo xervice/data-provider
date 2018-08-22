@@ -1,0 +1,34 @@
+filter:
+  excluded_paths:
+    - "tests/"
+
+  dependency_paths:
+    - "src/Generated/"
+    - "src/Orm/"
+    - "vendor/"
+
+build:
+  environment:
+    php: 7.1
+
+    variables:
+      APPLICATION_ENV: scrutinizer
+
+  tests:
+    override:
+      -
+        command: 'vendor/bin/codecept run --coverage --coverage-xml'
+        coverage:
+          file: 'tests/_output/coverage.xml'
+          format: 'clover'
+      - php-scrutinizer-run --enable-security-analysis
+
+checks:
+  php:
+    no_exit: false
+
+coding_style:
+  php:
+    spaces:
+      around_operators:
+        concatenation: true

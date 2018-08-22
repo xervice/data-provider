@@ -2,18 +2,15 @@
 declare(strict_types=1);
 
 
-namespace Xervice\DataProvider\Console;
+namespace Xervice\DataProvider\Communication\Console;
 
 
-use Core\Locator\Dynamic\ServiceNotParseable;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Xervice\Console\Command\AbstractCommand;
-use Xervice\Core\Locator\Locator;
-use Xervice\DataProvider\Generator\Exception\GenerateDirectoryNotWriteable;
+use Xervice\Console\Business\Model\Command\AbstractCommand;
 
 /**
- * @method \Xervice\DataProvider\DataProviderFacade getFacade()
+ * @method \Xervice\DataProvider\Business\DataProviderFacade getFacade()
  */
 class CleanCommand extends AbstractCommand
 {
@@ -33,15 +30,10 @@ class CleanCommand extends AbstractCommand
      *
      * @return void
      * @throws \InvalidArgumentException
-     * @throws \Core\Locator\Dynamic\ServiceNotParseable
      */
     public function run(InputInterface $input, OutputInterface $output): void
     {
-        try {
-            $this->getFacade()->cleanDataProvider();
-        } catch (GenerateDirectoryNotWriteable $e) {
-            Locator::getInstance()->exceptionHandler()->facade()->handleException($e);
-        }
+        $this->getFacade()->cleanDataProvider();
     }
 
 }

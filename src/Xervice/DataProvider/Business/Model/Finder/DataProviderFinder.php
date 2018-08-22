@@ -2,11 +2,11 @@
 declare(strict_types=1);
 
 
-namespace Xervice\DataProvider\Finder;
+namespace Xervice\DataProvider\Business\Model\Finder;
 
 
 use Symfony\Component\Finder\Finder;
-use Xervice\DataProvider\Generator\Exception\GenerateDirectoryNotWriteable;
+use Xervice\DataProvider\Business\Exception\GenerateDirectoryNotWriteable;
 
 class DataProviderFinder implements DataProviderFinderInterface
 {
@@ -32,7 +32,7 @@ class DataProviderFinder implements DataProviderFinderInterface
      * @param string $generatedPath
      * @param string $filePattern
      *
-     * @throws \Xervice\DataProvider\Generator\Exception\GenerateDirectoryNotWriteable
+     * @throws \Xervice\DataProvider\Business\Exception\GenerateDirectoryNotWriteable
      */
     public function __construct(array $paths, string $generatedPath, string $filePattern)
     {

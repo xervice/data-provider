@@ -2,10 +2,10 @@
 declare(strict_types=1);
 
 
-namespace Xervice\DataProvider\Parser;
+namespace Xervice\DataProvider\Business\Model\Parser;
 
-use Xervice\DataProvider\DataProvider\AnyDataProvider;
-use Xervice\DataProvider\DataProvider\DataProviderInterface;
+use Xervice\DataProvider\Business\Model\DataProvider\AnyDataProvider;
+use Xervice\DataProvider\Business\Model\DataProvider\DataProviderInterface;
 
 class XmlMerger implements XmlMergerInterface
 {
@@ -65,7 +65,7 @@ class XmlMerger implements XmlMergerInterface
     }
 
     /**
-     * @param $element
+     * @param \SimpleXMLElement $element
      *
      * @return array
      */

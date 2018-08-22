@@ -2,10 +2,10 @@
 declare(strict_types=1);
 
 
-namespace Xervice\DataProvider\Generator;
+namespace Xervice\DataProvider\Business\Model\Generator;
 
 
-use Xervice\DataProvider\Generator\Exception\GenerateDirectoryNotWriteable;
+use Xervice\DataProvider\Business\Exception\GenerateDirectoryNotWriteable;
 
 class FileWriter implements FileWriterInterface
 {
@@ -19,7 +19,7 @@ class FileWriter implements FileWriterInterface
      *
      * @param string $path
      *
-     * @throws \Xervice\DataProvider\Generator\Exception\GenerateDirectoryNotWriteable
+     * @throws \Xervice\DataProvider\Business\Exception\GenerateDirectoryNotWriteable
      */
     public function __construct(string $path)
     {
@@ -34,13 +34,19 @@ class FileWriter implements FileWriterInterface
     }
 
     /**
-     * @param $filename
-     * @param $content
+     * @param string $filename
+     * @param string $content
      */
-    public function writeToFile($filename, $content): void
+    public function writeToFile(string $filename, string $content): void
     {
-        file_put_contents($this->generatedPath . '/' . $filename, '<?php
-declare(strict_types=1);' . PHP_EOL . $content);
+        file_put_contents(
+            $this->generatedPath . '/' . $filename,
+            sprintf(
+                '<?php%1$sdeclare(strict_types=1);%1$s%2$s',
+                PHP_EOL,
+                $content
+            )
+        );
     }
 
 

@@ -2,28 +2,28 @@
 declare(strict_types=1);
 
 
-namespace Xervice\DataProvider\Parser;
+namespace Xervice\DataProvider\Business\Model\Parser;
 
 
-use Xervice\DataProvider\Finder\DataProviderFinder;
+use Xervice\DataProvider\Business\Model\Finder\DataProviderFinder;
 
 class DataProviderParser implements DataProviderParserInterface
 {
     /**
-     * @var \Xervice\DataProvider\Finder\DataProviderFinder
+     * @var \Xervice\DataProvider\Business\Model\Finder\DataProviderFinder
      */
     private $finder;
 
     /**
-     * @var \Xervice\DataProvider\Parser\XmlMerger
+     * @var \Xervice\DataProvider\Business\Model\Parser\XmlMerger
      */
     private $xmlMerger;
 
     /**
      * DataProviderParser constructor.
      *
-     * @param \Xervice\DataProvider\Finder\DataProviderFinder $finder
-     * @param \Xervice\DataProvider\Parser\XmlMerger $xmlMerger
+     * @param \Xervice\DataProvider\Business\Model\Finder\DataProviderFinder $finder
+     * @param \Xervice\DataProvider\Business\Model\Parser\XmlMerger $xmlMerger
      */
     public function __construct(
         DataProviderFinder $finder,

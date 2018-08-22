@@ -2,11 +2,9 @@
 declare(strict_types=1);
 
 
-namespace Xervice\DataProvider\Generator\Exception;
+namespace Xervice\DataProvider\Business\Exception;
 
-
-use Throwable;
-use Xervice\Core\Exception\XerviceException;
+use Xervice\Core\Business\Exception\XerviceException;
 
 class GenerateDirectoryNotWriteable extends XerviceException
 {

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Xervice\DataProvider\Finder;
+namespace Xervice\DataProvider\Business\Model\Finder;
 
 use Symfony\Component\Finder\Finder;
 

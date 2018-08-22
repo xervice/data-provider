@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Xervice\DataProvider\DataProvider;
+namespace Xervice\DataProvider\Business\Model\DataProvider;
 
 
 class AnyDataProvider implements DataProviderInterface
@@ -12,16 +12,16 @@ class AnyDataProvider implements DataProviderInterface
     private $className;
 
     /**
-     * @var \Xervice\DataProvider\DataProvider\DataProviderInterface
+     * @var \Xervice\DataProvider\Business\Model\DataProvider\DataProviderInterface
      */
     private $dataProvider;
 
     /**
      * AnyDataProvider constructor.
      *
-     * @param \Xervice\DataProvider\DataProvider\DataProviderInterface $dataProvider
+     * @param \Xervice\DataProvider\Business\Model\DataProvider\DataProviderInterface $dataProvider
      */
-    public function __construct(\Xervice\DataProvider\DataProvider\DataProviderInterface $dataProvider = null)
+    public function __construct(\Xervice\DataProvider\Business\Model\DataProvider\DataProviderInterface $dataProvider = null)
     {
         if ($dataProvider) {
             $this->className = \get_class($dataProvider);
@@ -46,17 +46,17 @@ class AnyDataProvider implements DataProviderInterface
     }
 
     /**
-     * @return \Xervice\DataProvider\DataProvider\DataProviderInterface
+     * @return \Xervice\DataProvider\Business\Model\DataProvider\DataProviderInterface
      */
-    public function getDataProvider(): ?\Xervice\DataProvider\DataProvider\DataProviderInterface
+    public function getDataProvider(): ?\Xervice\DataProvider\Business\Model\DataProvider\DataProviderInterface
     {
         return $this->dataProvider;
     }
 
     /**
-     * @param \Xervice\DataProvider\DataProvider\DataProviderInterface $dataProvider
+     * @param \Xervice\DataProvider\Business\Model\DataProvider\DataProviderInterface $dataProvider
      */
-    public function setDataProvider(\Xervice\DataProvider\DataProvider\DataProviderInterface $dataProvider): void
+    public function setDataProvider(\Xervice\DataProvider\Business\Model\DataProvider\DataProviderInterface $dataProvider): void
     {
         $this->dataProvider = $dataProvider;
     }

@@ -2,19 +2,19 @@
 declare(strict_types=1);
 
 
-namespace Xervice\DataProvider\Generator;
+namespace Xervice\DataProvider\Business\Model\Generator;
 
 
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\Helpers;
 use Nette\PhpGenerator\PhpNamespace;
-use Xervice\DataProvider\DataProvider\DataProviderInterface;
-use Xervice\DataProvider\Parser\DataProviderParserInterface;
+use Xervice\DataProvider\Business\Model\DataProvider\DataProviderInterface;
+use Xervice\DataProvider\Business\Model\Parser\DataProviderParserInterface;
 
 class DataProviderGenerator implements DataProviderGeneratorInterface
 {
     /**
-     * @var \Xervice\DataProvider\Parser\DataProviderParserInterface
+     * @var \Xervice\DataProvider\Business\Model\Parser\DataProviderParserInterface
      */
     private $parser;
 
@@ -36,7 +36,7 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     /**
      * DataProviderGenerator constructor.
      *
-     * @param \Xervice\DataProvider\Parser\DataProviderParserInterface $parser
+     * @param \Xervice\DataProvider\Business\Model\Parser\DataProviderParserInterface $parser
      * @param FileWriterInterface $fileWriter
      * @param string $namespace
      */
@@ -97,10 +97,10 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     }
 
     /**
-     * @param $dataProvider
-     * @param $element
+     * @param \Nette\PhpGenerator\ClassType $dataProvider
+     * @param array $element
      */
-    private function addGetter(ClassType $dataProvider, $element): void
+    private function addGetter(ClassType $dataProvider, array $element): void
     {
         $dataProvider->addMethod('get' . $element['name'])
                      ->addComment('@return ' . $element['type'])
@@ -110,10 +110,10 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     }
 
     /**
-     * @param $dataProvider
-     * @param $element
+     * @param \Nette\PhpGenerator\ClassType $dataProvider
+     * @param array $element
      */
-    private function addUnsetter(ClassType $dataProvider, $element): void
+    private function addUnsetter(ClassType $dataProvider, array $element): void
     {
         $dataProvider->addMethod('unset' . $element['name'])
                      ->addComment('@return ' . $dataProvider->getName())
@@ -122,10 +122,10 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     }
 
     /**
-     * @param $dataProvider
-     * @param $element
+     * @param \Nette\PhpGenerator\ClassType $dataProvider
+     * @param array $element
      */
-    private function addHas(ClassType $dataProvider, $element): void
+    private function addHas(ClassType $dataProvider, array $element): void
     {
         $dataProvider->addMethod('has' . $element['name'])
                      ->addComment('@return bool')
@@ -136,10 +136,10 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     }
 
     /**
-     * @param $dataProvider
-     * @param $element
+     * @param \Nette\PhpGenerator\ClassType $dataProvider
+     * @param array $element
      */
-    private function addSetter(ClassType $dataProvider, $element): void
+    private function addSetter(ClassType $dataProvider, array $element): void
     {
         $setter = $dataProvider->addMethod('set' . $element['name'])
                                ->addComment(
@@ -165,10 +165,10 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     }
 
     /**
-     * @param $element
-     * @param $dataProvider
+     * @param array $element
+     * @param \Nette\PhpGenerator\ClassType $dataProvider
      */
-    private function addSingleSetter($element, ClassType $dataProvider): void
+    private function addSingleSetter(array $element, ClassType $dataProvider): void
     {
         if (isset($element['singleton']) && $element['singleton'] !== '') {
             $singleSetter = $dataProvider
@@ -193,10 +193,10 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     }
 
     /**
-     * @param $dataProvider
-     * @param $element
+     * @param \Nette\PhpGenerator\ClassType $dataProvider
+     * @param array $element
      */
-    private function addProperty(ClassType $dataProvider, $element): void
+    private function addProperty(ClassType $dataProvider, array $element): void
     {
         $property = $dataProvider->addProperty($element['name'])
                                  ->setVisibility('protected')
@@ -213,16 +213,17 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
 
     /**
      * @param string $type
+     * @param bool $allowNull
      *
      * @return string
      */
-    private function getTypeHint(string $type, $allowNull = false): string
+    private function getTypeHint(string $type, bool $allowNull = null): string
     {
         if (strpos($type, '[]') !== false) {
             $type = 'array';
         }
 
-        if ($allowNull) {
+        if ($allowNull === true) {
             $type = '?' . $type;
         }
 
@@ -230,10 +231,10 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     }
 
     /**
-     * @param $dataProvider
-     * @param $elements
+     * @param \Nette\PhpGenerator\ClassType $dataProvider
+     * @param array $elements
      */
-    private function addElementsGetter($dataProvider, $elements): void
+    private function addElementsGetter(ClassType $dataProvider, array $elements): void
     {
         $dataProvider->addMethod('getElements')
                      ->setReturnType('array')
@@ -271,7 +272,7 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     }
 
     /**
-     * @param $element
+     * @param array $element
      *
      * @return bool
      */

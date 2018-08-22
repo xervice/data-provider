@@ -5,26 +5,22 @@ use DataProvider\DefaultDataProvider;
 use DataProvider\TestKeyValueCollectionDataProvider;
 use DataProvider\TestKeyValueDataProvider;
 use DataProvider\WildcardDataProvider;
-use Xervice\Config\XerviceConfig;
-use Xervice\Core\Locator\Dynamic\DynamicLocator;
+use Xervice\Config\Business\XerviceConfig;
+use Xervice\Core\Business\Model\Locator\Dynamic\Business\DynamicBusinessLocator;
 use Xervice\DataProvider\DataProviderConfig;
 
 /**
- * @method \Xervice\DataProvider\DataProviderFacade getFacade()
+ * @method \Xervice\DataProvider\Business\DataProviderFacade getFacade()
  */
 class IntegrationTest extends \Codeception\Test\Unit
 {
-    use DynamicLocator;
+    use DynamicBusinessLocator;
 
     /**
      * @var \XerviceTest\XerviceTester
      */
     protected $tester;
 
-    /**
-     * @throws \Core\Locator\Dynamic\ServiceNotParseable
-     * @throws \Xervice\DataProvider\Generator\Exception\GenerateDirectoryNotWriteable
-     */
     protected function _before()
     {
         XerviceConfig::getInstance()->getConfig()->set(
@@ -34,7 +30,7 @@ class IntegrationTest extends \Codeception\Test\Unit
             ]
         );
 
-        XerviceConfig::getInstance()->getConfig()->set(DataProviderConfig::FILE_PATTERN, '*.testprovider.xml');
+        XerviceConfig::set(DataProviderConfig::FILE_PATTERN, '*.testprovider.xml');
         $this->getFacade()->generateDataProvider();
     }
 
@@ -43,9 +39,6 @@ class IntegrationTest extends \Codeception\Test\Unit
      * @group Xervice
      * @group DataProvider
      * @group Integration
-     *
-     * @throws \Core\Locator\Dynamic\ServiceNotParseable
-     * @throws \Xervice\DataProvider\Generator\Exception\GenerateDirectoryNotWriteable
      */
     public function testGeneration()
     {

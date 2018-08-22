@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Xervice\DataProvider\DataProvider;
+namespace Xervice\DataProvider\Business\Model\DataProvider;
 
 /**
  * @method array getElements()

@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace Xervice\DataProvider\DataProvider;
+namespace Xervice\DataProvider\Business\Model\DataProvider;
 
 /**
  * @method array getElements()
@@ -56,7 +56,7 @@ abstract class AbstractDataProvider implements DataProviderInterface
     }
 
     /**
-     * @param \Xervice\DataProvider\DataProvider\DataProviderInterface $provider
+     * @param \Xervice\DataProvider\Business\Model\DataProvider\DataProviderInterface $provider
      *
      * @return array
      */

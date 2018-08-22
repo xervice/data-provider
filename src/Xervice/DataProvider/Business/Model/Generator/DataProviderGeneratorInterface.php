@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Xervice\DataProvider\Generator;
+namespace Xervice\DataProvider\Business\Model\Generator;
 
 interface DataProviderGeneratorInterface
 {

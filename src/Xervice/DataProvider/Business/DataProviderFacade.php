@@ -2,20 +2,18 @@
 declare(strict_types=1);
 
 
-namespace Xervice\DataProvider;
+namespace Xervice\DataProvider\Business;
+use Xervice\Core\Business\Model\Facade\AbstractFacade;
 
-
-use Xervice\Core\Facade\AbstractFacade;
 
 /**
- * @method \Xervice\DataProvider\DataProviderFactory getFactory()
+ * @method \Xervice\DataProvider\Business\DataProviderBusinessFactory getFactory()
  */
 class DataProviderFacade extends AbstractFacade
 {
     /**
      * @return array
      * @throws \Nette\InvalidArgumentException
-     * @throws \Xervice\DataProvider\Generator\Exception\GenerateDirectoryNotWriteable
      */
     public function generateDataProvider(): array
     {
@@ -24,7 +22,6 @@ class DataProviderFacade extends AbstractFacade
 
     /**
      * @throws \InvalidArgumentException
-     * @throws \Xervice\DataProvider\Generator\Exception\GenerateDirectoryNotWriteable
      */
     public function cleanDataProvider(): void
     {
