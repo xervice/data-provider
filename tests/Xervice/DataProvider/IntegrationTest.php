@@ -1,4 +1,5 @@
 <?php
+
 namespace XerviceTest\DataProvider;
 
 use DataProvider\DefaultDataProvider;
@@ -26,7 +27,7 @@ class IntegrationTest extends \Codeception\Test\Unit
         XerviceConfig::getInstance()->getConfig()->set(
             DataProviderConfig::DATA_PROVIDER_PATHS,
             [
-                __DIR__ . '/Schema'
+                __DIR__ . '/Schema',
             ]
         );
 
@@ -48,7 +49,7 @@ class IntegrationTest extends \Codeception\Test\Unit
                 'DefaultDataProvider.php',
                 'TestKeyValueDataProvider.php',
                 'TestKeyValueCollectionDataProvider.php',
-                'WildcardDataProvider.php'
+                'WildcardDataProvider.php',
             ],
             $this->getFacade()->generateDataProvider()
         );
@@ -123,7 +124,7 @@ class IntegrationTest extends \Codeception\Test\Unit
     {
         $testData = [
             'Key' => 'test',
-            'Value' => 'value'
+            'Value' => 'value',
         ];
 
         $keyValue = new TestKeyValueDataProvider();
@@ -210,6 +211,36 @@ class IntegrationTest extends \Codeception\Test\Unit
         foreach ($newWildcard->getDataProviders() as $dataProvider) {
             $this->assertWildcardProvider($dataProvider);
         }
+    }
+
+    public function testRightMethodeName()
+    {
+        $class = new \ReflectionClass(TestKeyValueDataProvider::class);
+
+        $methodNames = [];
+        foreach ($class->getMethods() as $property) {
+            $methodNames[$property->getName()] = true;
+        }
+
+        $this->assertArrayHasKey('getKey', $methodNames);
+        $this->assertArrayHasKey('setKey', $methodNames);
+        $this->assertArrayHasKey('unsetKey', $methodNames);
+        $this->assertArrayHasKey('hasKey', $methodNames);
+
+        $this->assertArrayHasKey('getValue', $methodNames);
+        $this->assertArrayHasKey('setValue', $methodNames);
+        $this->assertArrayHasKey('unsetValue', $methodNames);
+        $this->assertArrayHasKey('hasValue', $methodNames);
+
+        $this->assertArrayHasKey('getIsActive', $methodNames);
+        $this->assertArrayHasKey('setIsActive', $methodNames);
+        $this->assertArrayHasKey('unsetIsActive', $methodNames);
+        $this->assertArrayHasKey('hasIsActive', $methodNames);
+
+        $this->assertArrayHasKey('getDescription', $methodNames);
+        $this->assertArrayHasKey('setDescription', $methodNames);
+        $this->assertArrayHasKey('unsetDescription', $methodNames);
+        $this->assertArrayHasKey('hasDescription', $methodNames);
     }
 
     /**
