@@ -217,30 +217,42 @@ class IntegrationTest extends \Codeception\Test\Unit
     {
         $class = new \ReflectionClass(TestKeyValueDataProvider::class);
 
-        $methodNames = [];
+        $testKeyValueMethodNames = [];
         foreach ($class->getMethods() as $property) {
-            $methodNames[$property->getName()] = true;
+            $testKeyValueMethodNames[$property->getName()] = true;
         }
 
-        $this->assertArrayHasKey('getKey', $methodNames);
-        $this->assertArrayHasKey('setKey', $methodNames);
-        $this->assertArrayHasKey('unsetKey', $methodNames);
-        $this->assertArrayHasKey('hasKey', $methodNames);
+        $this->assertArrayHasKey('getKey', $testKeyValueMethodNames);
+        $this->assertArrayHasKey('setKey', $testKeyValueMethodNames);
+        $this->assertArrayHasKey('unsetKey', $testKeyValueMethodNames);
+        $this->assertArrayHasKey('hasKey', $testKeyValueMethodNames);
 
-        $this->assertArrayHasKey('getValue', $methodNames);
-        $this->assertArrayHasKey('setValue', $methodNames);
-        $this->assertArrayHasKey('unsetValue', $methodNames);
-        $this->assertArrayHasKey('hasValue', $methodNames);
+        $this->assertArrayHasKey('getValue', $testKeyValueMethodNames);
+        $this->assertArrayHasKey('setValue', $testKeyValueMethodNames);
+        $this->assertArrayHasKey('unsetValue', $testKeyValueMethodNames);
+        $this->assertArrayHasKey('hasValue', $testKeyValueMethodNames);
 
-        $this->assertArrayHasKey('getIsActive', $methodNames);
-        $this->assertArrayHasKey('setIsActive', $methodNames);
-        $this->assertArrayHasKey('unsetIsActive', $methodNames);
-        $this->assertArrayHasKey('hasIsActive', $methodNames);
+        $this->assertArrayHasKey('getIsActive', $testKeyValueMethodNames);
+        $this->assertArrayHasKey('setIsActive', $testKeyValueMethodNames);
+        $this->assertArrayHasKey('unsetIsActive', $testKeyValueMethodNames);
+        $this->assertArrayHasKey('hasIsActive', $testKeyValueMethodNames);
 
-        $this->assertArrayHasKey('getDescription', $methodNames);
-        $this->assertArrayHasKey('setDescription', $methodNames);
-        $this->assertArrayHasKey('unsetDescription', $methodNames);
-        $this->assertArrayHasKey('hasDescription', $methodNames);
+        $this->assertArrayHasKey('getDescription', $testKeyValueMethodNames);
+        $this->assertArrayHasKey('setDescription', $testKeyValueMethodNames);
+        $this->assertArrayHasKey('unsetDescription', $testKeyValueMethodNames);
+        $this->assertArrayHasKey('hasDescription', $testKeyValueMethodNames);
+
+        $class = new \ReflectionClass(TestKeyValueCollectionDataProvider::class);
+
+        $testKeyValueCollectionMethodNames = [];
+        foreach ($class->getMethods() as $property) {
+            $testKeyValueCollectionMethodNames[$property->getName()] = true;
+        }
+
+        $this->assertArrayHasKey('getKeyValues', $testKeyValueCollectionMethodNames);
+        $this->assertArrayHasKey('setKeyValues', $testKeyValueCollectionMethodNames);
+        $this->assertArrayHasKey('unsetKeyValues', $testKeyValueCollectionMethodNames);
+        $this->assertArrayHasKey('hasKeyValues', $testKeyValueCollectionMethodNames);
     }
 
     /**
