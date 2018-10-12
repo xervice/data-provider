@@ -27,7 +27,7 @@ class IntegrationTest extends \Codeception\Test\Unit
         XerviceConfig::getInstance()->getConfig()->set(
             DataProviderConfig::DATA_PROVIDER_PATHS,
             [
-                __DIR__ . '/Schema',
+                __DIR__ . '/Schema'
             ]
         );
 
@@ -49,7 +49,7 @@ class IntegrationTest extends \Codeception\Test\Unit
                 'DefaultDataProvider.php',
                 'TestKeyValueDataProvider.php',
                 'TestKeyValueCollectionDataProvider.php',
-                'WildcardDataProvider.php',
+                'WildcardDataProvider.php'
             ],
             $this->getFacade()->generateDataProvider()
         );
@@ -124,7 +124,7 @@ class IntegrationTest extends \Codeception\Test\Unit
     {
         $testData = [
             'Key' => 'test',
-            'Value' => 'value',
+            'Value' => 'value'
         ];
 
         $keyValue = new TestKeyValueDataProvider();
