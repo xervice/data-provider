@@ -8,13 +8,13 @@
 
     <DataProvider name="TestKeyValue">
         <DataElement name="Key" type="string"/>
-        <DataElement name="Value" type="string" allownull="true"/>
-        <DataElement name="Default" type="string" default="Test"/>
+        <DataElement name="value" type="string" allownull="true"/>
+        <DataElement name="default" type="string" default="Test"/>
         <DataElement name="IsActive" type="bool" default="false"/>
     </DataProvider>
 
     <DataProvider name="TestKeyValueCollection">
-        <DataElement name="KeyValues" singleton="OneValue" type="TestKeyValue[]"/>
+        <DataElement name="keyValues" singleton="OneValue" type="TestKeyValue[]"/>
         <DataElement name="ChildValue" singleton="ChildValue" allownull="true" type="TestKeyValue"/>
     </DataProvider>
 </DataProviders>

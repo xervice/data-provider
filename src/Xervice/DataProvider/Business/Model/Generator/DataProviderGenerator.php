@@ -103,7 +103,7 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
      */
     private function addGetter(ClassType $dataProvider, array $element): void
     {
-        $dataProvider->addMethod('get' . $element['name'])
+        $dataProvider->addMethod('get' . $this->formatElementName($element['name']))
                      ->addComment('@return ' . $element['type'])
                      ->setVisibility('public')
                      ->setBody('return $this->' . $element['name'] . ';')
@@ -117,7 +117,7 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
      */
     private function addUnsetter(ClassType $dataProvider, array $element): void
     {
-        $dataProvider->addMethod('unset' . $element['name'])
+        $dataProvider->addMethod('unset' . $this->formatElementName($element['name']))
                      ->addComment('@return ' . $dataProvider->getName())
                      ->setVisibility('public')
                      ->setBody('$this->' . $element['name'] . ' = null;' . PHP_EOL . PHP_EOL . 'return $this;')
@@ -130,7 +130,7 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
      */
     private function addHas(ClassType $dataProvider, array $element): void
     {
-        $dataProvider->addMethod('has' . $element['name'])
+        $dataProvider->addMethod('has' . $this->formatElementName($element['name']))
                      ->addComment('@return bool')
                      ->setVisibility('public')
                      ->setBody(
@@ -145,7 +145,7 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
      */
     private function addSetter(ClassType $dataProvider, array $element): void
     {
-        $setter = $dataProvider->addMethod('set' . $element['name'])
+        $setter = $dataProvider->addMethod('set' . $this->formatElementName($element['name']))
                                ->addComment(
                                    '@param ' . $element['type'] . ' $'
                                    . $element['name']
@@ -314,5 +314,14 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
 
         settype($default, $element['type']);
         return $default;
+    }
+
+    /**
+     * @param string $elementName
+     * @return string
+     */
+    private function formatElementName(string $elementName) : string
+    {
+        return strtoupper($elementName[0]) . substr($elementName, 1);
     }
 }
