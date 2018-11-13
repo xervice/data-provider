@@ -322,6 +322,6 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
      */
     private function formatElementName(string $elementName) : string
     {
-        return strtoupper($elementName[0]) . substr($elementName, 1);
+        return ucfirst($elementName);
     }
 }
