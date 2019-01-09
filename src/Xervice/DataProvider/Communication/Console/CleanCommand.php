@@ -31,7 +31,7 @@ class CleanCommand extends AbstractCommand
      * @return void
      * @throws \InvalidArgumentException
      */
-    public function run(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->getFacade()->cleanDataProvider();
     }
