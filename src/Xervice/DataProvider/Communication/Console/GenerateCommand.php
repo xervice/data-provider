@@ -31,7 +31,7 @@ class GenerateCommand extends AbstractCommand
      * @return int|void
      * @throws \Nette\InvalidArgumentException
      */
-    public function run(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Start generating...');
         $generated = $this->getFacade()->generateDataProvider();
