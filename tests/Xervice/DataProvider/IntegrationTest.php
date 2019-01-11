@@ -6,6 +6,8 @@ use DataProvider\DefaultDataProvider;
 use DataProvider\TestKeyValueCollectionDataProvider;
 use DataProvider\TestKeyValueDataProvider;
 use DataProvider\WildcardDataProvider;
+use DataProvider\WithoutUnderlineConvertingDataProvider;
+use DataProvider\WithUnderlineConvertingDataProvider;
 use Xervice\Config\Business\XerviceConfig;
 use Xervice\Core\Business\Model\Locator\Dynamic\Business\DynamicBusinessLocator;
 use Xervice\DataProvider\DataProviderConfig;
@@ -49,7 +51,9 @@ class IntegrationTest extends \Codeception\Test\Unit
                 'DefaultDataProvider.php',
                 'TestKeyValueDataProvider.php',
                 'TestKeyValueCollectionDataProvider.php',
-                'WildcardDataProvider.php'
+                'WildcardDataProvider.php',
+                'WithoutUnderlineConvertingDataProvider.php',
+                'WithUnderlineConvertingDataProvider.php'
             ],
             $this->getFacade()->generateDataProvider()
         );
@@ -84,6 +88,34 @@ class IntegrationTest extends \Codeception\Test\Unit
         $this->assertEquals(
             '',
             $dataProvider->getEmptyText()
+        );
+    }
+
+    /**
+     * @group Xervice
+     * @group DataProvider
+     * @group Integration
+     */
+    public function testDataProviderWithUnderlinesWithoutConverting()
+    {
+        $dataProvider = new WithoutUnderlineConvertingDataProvider();
+
+        $this->assertTrue(
+            method_exists($dataProvider, 'setIt_is_a_test')
+        );
+    }
+
+    /**
+     * @group Xervice
+     * @group DataProvider
+     * @group Integration
+     */
+    public function testDataProviderWithUnderlinesWithConverting()
+    {
+        $dataProvider = new WithUnderlineConvertingDataProvider();
+
+        $this->assertTrue(
+            method_exists($dataProvider, 'setItIsATest')
         );
     }
 

@@ -27,13 +27,13 @@ class XmlMerger implements XmlMergerInterface
             foreach ($xmlDataProvider->DataElement as $element) {
                 $fieldName = (string)$element->attributes()['name'];
 
-                if (isset($this->mergedXml[$dataProvider][$fieldName])) {
-                    $this->mergedXml[$dataProvider][$fieldName] = array_merge(
-                        $this->mergedXml[$dataProvider][$fieldName],
+                if (isset($this->mergedXml[$dataProvider]['elements'][$fieldName])) {
+                    $this->mergedXml[$dataProvider]['elements'][$fieldName] = array_merge(
+                        $this->mergedXml[$dataProvider]['elements'][$fieldName],
                         $this->getElementData($element)
                     );
                 } else {
-                    $this->mergedXml[$dataProvider][$fieldName] = $this->getElementData($element);
+                    $this->mergedXml[$dataProvider]['elements'][$fieldName] = $this->getElementData($element);
                 }
             }
         }
@@ -58,7 +58,13 @@ class XmlMerger implements XmlMergerInterface
     {
         $dataProvider = (string)$xmlDataProvider->attributes()['name'];
         if (!isset($this->mergedXml[$dataProvider])) {
-            $this->mergedXml[$dataProvider] = [];
+            $this->mergedXml[$dataProvider] = [
+                'configs' => [
+                   'convertUnderlines' => (bool)$xmlDataProvider->attributes()['ConvertUnderlines'] ?? false,
+                   'deprecated' => (bool)$xmlDataProvider->attributes()['deprecated'] ?? false
+                ],
+                'elements' => []
+            ];
         }
 
         return $dataProvider;

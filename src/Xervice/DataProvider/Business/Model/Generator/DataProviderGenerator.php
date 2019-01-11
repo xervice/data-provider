@@ -60,9 +60,9 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     {
         $fileGenerated = [];
 
-        foreach ($this->parser->getDataProvider() as $providerName => $providerElements) {
+        foreach ($this->parser->getDataProvider() as $providerName => $providerData) {
             $namespace = new PhpNamespace($this->namespace);
-            $dataProvider = $this->createDataProviderClass($providerName, $providerElements, $namespace);
+            $dataProvider = $this->createDataProviderClass($providerName, $providerData, $namespace);
             $classContent = (string)$namespace;
             $classContent = str_replace('\?', '?', $classContent);
             $classContent = Helpers::tabsToSpaces($classContent, 4);
@@ -100,10 +100,11 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     /**
      * @param \Nette\PhpGenerator\ClassType $dataProvider
      * @param array $element
+     * @param array $configs
      */
-    private function addGetter(ClassType $dataProvider, array $element): void
+    private function addGetter(ClassType $dataProvider, array $element, array $configs): void
     {
-        $dataProvider->addMethod('get' . $this->formatElementName($element['name']))
+        $dataProvider->addMethod('get' . $this->formatElementName($element['name'], $configs))
                      ->addComment('@return ' . $element['type'])
                      ->setVisibility('public')
                      ->setBody('return $this->' . $element['name'] . ';')
@@ -114,10 +115,11 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     /**
      * @param \Nette\PhpGenerator\ClassType $dataProvider
      * @param array $element
+     * @param array $configs
      */
-    private function addUnsetter(ClassType $dataProvider, array $element): void
+    private function addUnsetter(ClassType $dataProvider, array $element, array $configs): void
     {
-        $dataProvider->addMethod('unset' . $this->formatElementName($element['name']))
+        $dataProvider->addMethod('unset' . $this->formatElementName($element['name'], $configs))
                      ->addComment('@return ' . $dataProvider->getName())
                      ->setVisibility('public')
                      ->setBody('$this->' . $element['name'] . ' = null;' . PHP_EOL . PHP_EOL . 'return $this;')
@@ -127,10 +129,11 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     /**
      * @param \Nette\PhpGenerator\ClassType $dataProvider
      * @param array $element
+     * @param array $configs
      */
-    private function addHas(ClassType $dataProvider, array $element): void
+    private function addHas(ClassType $dataProvider, array $element, array $configs): void
     {
-        $dataProvider->addMethod('has' . $this->formatElementName($element['name']))
+        $dataProvider->addMethod('has' . $this->formatElementName($element['name'], $configs))
                      ->addComment('@return bool')
                      ->setVisibility('public')
                      ->setBody(
@@ -142,10 +145,11 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     /**
      * @param \Nette\PhpGenerator\ClassType $dataProvider
      * @param array $element
+     * @param array $configs
      */
-    private function addSetter(ClassType $dataProvider, array $element): void
+    private function addSetter(ClassType $dataProvider, array $element, array $configs): void
     {
-        $setter = $dataProvider->addMethod('set' . $this->formatElementName($element['name']))
+        $setter = $dataProvider->addMethod('set' . $this->formatElementName($element['name'], $configs))
                                ->addComment(
                                    '@param ' . $element['type'] . ' $'
                                    . $element['name']
@@ -173,12 +177,17 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
     /**
      * @param array $element
      * @param \Nette\PhpGenerator\ClassType $dataProvider
+     * @param array $configs
      */
-    private function addSingleSetter(array $element, ClassType $dataProvider): void
+    private function addSingleSetter(array $element, ClassType $dataProvider, array $configs): void
     {
         if (isset($element['singleton']) && $element['singleton'] !== '') {
+            $methodName = $configs['convertUnderlines']
+                ? $this->convertUnderlines($element['singleton'])
+                : $element['singleton'];
+
             $singleSetter = $dataProvider
-                ->addMethod('add' . $element['singleton'])
+                ->addMethod('add' . $methodName)
                 ->addComment(
                     '@param ' . $element['singleton_type'] . ' $'
                     . $element['singleton']
@@ -255,25 +264,26 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
 
     /**
      * @param string $providerName
-     * @param array $providerElements
+     * @param array $providerData
      * @param \Nette\PhpGenerator\PhpNamespace $namespace
      *
      * @return \Nette\PhpGenerator\ClassType
      */
     private function createDataProviderClass(
         string $providerName,
-        array $providerElements,
+        array $providerData,
         PhpNamespace $namespace
     ): ClassType {
         $dataProvider = $this->createNewDataProvider($providerName, $namespace);
+        $providerElements = $providerData['elements'];
 
         foreach ($providerElements as $element) {
             $this->addProperty($dataProvider, $element);
-            $this->addGetter($dataProvider, $element);
-            $this->addSetter($dataProvider, $element);
-            $this->addUnsetter($dataProvider, $element);
-            $this->addHas($dataProvider, $element);
-            $this->addSingleSetter($element, $dataProvider);
+            $this->addGetter($dataProvider, $element, $providerData['configs']);
+            $this->addSetter($dataProvider, $element, $providerData['configs']);
+            $this->addUnsetter($dataProvider, $element, $providerData['configs']);
+            $this->addHas($dataProvider, $element, $providerData['configs']);
+            $this->addSingleSetter($element, $dataProvider, $providerData['configs']);
 
         }
 
@@ -318,10 +328,33 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
 
     /**
      * @param string $elementName
+     *
      * @return string
      */
-    private function formatElementName(string $elementName) : string
+    private function formatElementName(string $elementName, array $configs): string
     {
-        return ucfirst($elementName);
+        $elementName = ucfirst($elementName);
+
+        if ($configs['convertUnderlines']) {
+            $elementName = $this->convertUnderlines($elementName);
+        }
+
+        return $elementName;
+    }
+
+    /**
+     * @param string $methodName
+     *
+     * @return string
+     */
+    private function convertUnderlines(string $methodName): string
+    {
+        return preg_replace_callback(
+            '@\_([a-z]{1,1})@',
+            function ($matches) {
+                return strtoupper($matches[1] ?? '');
+            },
+            $methodName
+        );
     }
 }

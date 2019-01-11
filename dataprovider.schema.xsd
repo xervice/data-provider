@@ -19,6 +19,7 @@
                             </xsd:element>
                         </xsd:sequence>
                         <xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+                        <xsd:attribute name="ConvertUnderlines" type="xsd:boolean" use="optional" default="false"></xsd:attribute>
                         <xsd:attribute name="deprecated" type="xsd:boolean" use="optional"></xsd:attribute>
                     </xsd:complexType>
                 </xsd:element>
