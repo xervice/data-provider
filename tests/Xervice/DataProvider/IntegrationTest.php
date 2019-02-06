@@ -203,6 +203,33 @@ class IntegrationTest extends \Codeception\Test\Unit
      * @group DataProvider
      * @group Integration
      */
+    public function testFromAndToArrayWithUnderlines()
+    {
+        $withUnderlines = new WithUnderlineConvertingDataProvider();
+        $withUnderlines->setItIsATest('testToArray');
+
+        $arrayData = $withUnderlines->toArray();
+
+        $this->assertEquals(
+            'testToArray',
+            $arrayData['itIsATest']
+        );
+
+        $newDto = new WithUnderlineConvertingDataProvider();
+        $newDto->fromArray($arrayData);
+
+        $this->assertEquals(
+            'testToArray',
+            $newDto->getItIsATest()
+        );
+
+    }
+
+    /**
+     * @group Xervice
+     * @group DataProvider
+     * @group Integration
+     */
     public function testWildcard()
     {
         $dataProvider = new TestKeyValueDataProvider();

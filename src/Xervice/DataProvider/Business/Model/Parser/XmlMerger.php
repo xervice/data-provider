@@ -30,10 +30,11 @@ class XmlMerger implements XmlMergerInterface
                 if (isset($this->mergedXml[$dataProvider]['elements'][$fieldName])) {
                     $this->mergedXml[$dataProvider]['elements'][$fieldName] = array_merge(
                         $this->mergedXml[$dataProvider]['elements'][$fieldName],
-                        $this->getElementData($element)
+                        $this->getElementData($element, $this->mergedXml[$dataProvider])
                     );
-                } else {
-                    $this->mergedXml[$dataProvider]['elements'][$fieldName] = $this->getElementData($element);
+                }
+                else {
+                    $this->mergedXml[$dataProvider]['elements'][$fieldName] = $this->getElementData($element, $this->mergedXml[$dataProvider]);
                 }
             }
         }
@@ -60,8 +61,8 @@ class XmlMerger implements XmlMergerInterface
         if (!isset($this->mergedXml[$dataProvider])) {
             $this->mergedXml[$dataProvider] = [
                 'configs' => [
-                   'convertUnderlines' => (bool)$xmlDataProvider->attributes()['ConvertUnderlines'] ?? false,
-                   'deprecated' => (bool)$xmlDataProvider->attributes()['deprecated'] ?? false
+                    'convertUnderlines' => (bool)$xmlDataProvider->attributes()['ConvertUnderlines'] ?? false,
+                    'deprecated' => (bool)$xmlDataProvider->attributes()['deprecated'] ?? false
                 ],
                 'elements' => []
             ];
@@ -75,17 +76,18 @@ class XmlMerger implements XmlMergerInterface
      *
      * @return array
      */
-    private function getElementData(\SimpleXMLElement $element): array
+    private function getElementData(\SimpleXMLElement $element, array $dataProvider): array
     {
         $type = (string)$element->attributes()['type'];
 
         $data = [
-            'name'      => (string)$element->attributes()['name'],
-            'allownull'      => (bool)$element->attributes()['allownull'],
-            'default'      => (string)$element->attributes()['default'],
-            'type'      => $this->getVariableType($type),
-            'is_collection'  => $this->isCollection($type),
-            'is_dataprovider' => $this->isDataProvider($type)
+            'name' => (string)$element->attributes()['name'],
+            'allownull' => (bool)$element->attributes()['allownull'],
+            'default' => (string)$element->attributes()['default'],
+            'type' => $this->getVariableType($type),
+            'is_collection' => $this->isCollection($type),
+            'is_dataprovider' => $this->isDataProvider($type),
+            'isCamelCase' => $dataProvider['configs']['convertUnderlines']
         ];
 
         $singleton = (string)$element->attributes()['singleton'];
@@ -102,7 +104,7 @@ class XmlMerger implements XmlMergerInterface
      *
      * @return bool
      */
-    private function isDataProvider(string $type) : bool
+    private function isDataProvider(string $type): bool
     {
         return (!$this->isSimpleType($type) && !$this->isCollection($type));
     }
@@ -112,7 +114,7 @@ class XmlMerger implements XmlMergerInterface
      *
      * @return bool
      */
-    private function isCollection(string $type) : bool
+    private function isCollection(string $type): bool
     {
         return strpos($type, '[]') !== false;
     }

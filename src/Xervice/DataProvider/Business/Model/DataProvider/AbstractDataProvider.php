@@ -20,7 +20,7 @@ abstract class AbstractDataProvider implements DataProviderInterface
     public function fromArray(array $data): void
     {
         foreach ($this->getElements() as $element) {
-            $fieldname = $element['name'];
+            $fieldname = $element['isCamelCase'] ? $this->convertUnderlines($element['name']) : $element['name'];
             if (isset($data[$fieldname])) {
                 $this->setFieldFromArrayData($data, $element, $fieldname);
             }
@@ -36,7 +36,7 @@ abstract class AbstractDataProvider implements DataProviderInterface
     {
         $data = [];
         foreach ($provider->getElements() as $element) {
-            $fieldname = $element['name'];
+            $fieldname = $element['isCamelCase'] ? $this->convertUnderlines($element['name']) : $element['name'];
             $hasMethod = 'has' . $fieldname;
             if ($provider->$hasMethod()) {
                 $data = $this->getDataFromFields($provider, $fieldname, $element, $data);
@@ -54,10 +54,10 @@ abstract class AbstractDataProvider implements DataProviderInterface
     private function setFieldFromArrayData(array $data, array $element, string $fieldname): void
     {
         if (strpos($element['type'], 'DataProviderInterface[]') !== false) {
-            $this->setChildData($data, $fieldname);
+            $this->setChildData($data, $element, $fieldname);
         }
         elseif (strpos($element['type'], 'DataProviderInterface') !== false) {
-            $this->setAnyDataProviderValues($data, $fieldname);
+            $this->setAnyDataProviderValues($data, $element, $fieldname);
         }
         elseif ($element['is_dataprovider']) {
             $this->setOneDataProviderValue($data, $element, $fieldname);
@@ -66,7 +66,7 @@ abstract class AbstractDataProvider implements DataProviderInterface
             $this->setCollectionValues($data, $element, $fieldname);
         }
         else {
-            $this->{$fieldname} = $data[$fieldname];
+            $this->{$element['name']} = $data[$fieldname];
         }
     }
 
@@ -105,26 +105,28 @@ abstract class AbstractDataProvider implements DataProviderInterface
 
     /**
      * @param array $data
+     * @param array $element
      * @param string $fieldname
      */
-    private function setChildData(array $data, string $fieldname): void
+    private function setChildData(array $data, array $element, string $fieldname): void
     {
         foreach ($data[$fieldname] as $childData) {
             $anyDataProvider = new AnyDataProvider();
             $anyDataProvider->fromArray($childData);
-            $this->{$fieldname}[] = $anyDataProvider->getDataProvider();
+            $this->{$element['name']}[] = $anyDataProvider->getDataProvider();
         }
     }
 
     /**
      * @param array $data
+     * @param array $element
      * @param string $fieldname
      */
-    private function setAnyDataProviderValues(array $data, string $fieldname): void
+    private function setAnyDataProviderValues(array $data, array $element, string $fieldname): void
     {
         $anyDataProvider = new AnyDataProvider();
         $anyDataProvider->fromArray($data[$fieldname]);
-        $this->{$fieldname} = $anyDataProvider->getDataProvider();
+        $this->{$element['name']} = $anyDataProvider->getDataProvider();
     }
 
     /**
@@ -138,7 +140,7 @@ abstract class AbstractDataProvider implements DataProviderInterface
         if (\is_array($data[$fieldname])) {
             $dataProvider->fromArray($data[$fieldname]);
         }
-        $this->{$fieldname} = $dataProvider;
+        $this->{$element['name']} = $dataProvider;
     }
 
     /**
@@ -151,7 +153,7 @@ abstract class AbstractDataProvider implements DataProviderInterface
         foreach ($data[$fieldname] as $childData) {
             $dataProvider = new $element['singleton_type']();
             $dataProvider->fromArray($childData);
-            $this->{$fieldname}[] = $dataProvider;
+            $this->{$element['name']}[] = $dataProvider;
         }
     }
 
@@ -196,6 +198,22 @@ abstract class AbstractDataProvider implements DataProviderInterface
             $data[$fieldname][] = $child->toArray();
         }
         return $data;
+    }
+
+    /**
+     * @param string $methodName
+     *
+     * @return string
+     */
+    private function convertUnderlines(string $methodName): string
+    {
+        return preg_replace_callback(
+            '@\_([a-z]{1,1})@',
+            function ($matches) {
+                return strtoupper($matches[1] ?? '');
+            },
+            $methodName
+        );
     }
 
     /**
