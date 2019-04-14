@@ -25,6 +25,21 @@ use Xervice\DataProvider\Business\Model\Parser\XmlMergerInterface;
 class DataProviderBusinessFactory extends AbstractBusinessFactory
 {
     /**
+     * @param \Xervice\DataProvider\Business\Model\Parser\DataProviderParserInterface $dataProviderParser
+     *
+     * @return \Xervice\DataProvider\Business\Model\Generator\DataProviderGeneratorInterface
+     */
+    public function createCustomGenerator(DataProviderParserInterface $dataProviderParser): DataProviderGeneratorInterface
+    {
+        return new DataProviderGenerator(
+            $dataProviderParser,
+            $this->createFileWriter(),
+            $this->getConfig()->getDataProviderNamespace(),
+            $this->getConfig()->getDataProviderExtends()
+        );
+    }
+
+    /**
      * @return \Xervice\DataProvider\Business\Model\Generator\DataProviderGenerator
      */
     public function createDataProviderGenerator(): DataProviderGeneratorInterface
