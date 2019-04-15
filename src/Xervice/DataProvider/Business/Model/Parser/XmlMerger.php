@@ -80,6 +80,8 @@ class XmlMerger implements XmlMergerInterface
     {
         $type = (string)$element->attributes()['type'];
 
+        $type = ($type !== 'double') ? $type : 'float';
+
         $data = [
             'name' => (string)$element->attributes()['name'],
             'allownull' => (bool)$element->attributes()['allownull'],

@@ -82,6 +82,10 @@ class IntegrationTest extends \Codeception\Test\Unit
             $dataProvider->getFloat()
         );
         $this->assertEquals(
+            doubleval(2.5),
+            $dataProvider->getDouble()
+        );
+        $this->assertEquals(
             [],
             $dataProvider->getList()
         );
