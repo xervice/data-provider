@@ -58,7 +58,7 @@ To define a data provider, you define them in an xml file.
 * int
 * string
 * bool
-* double
+* double (= float)
 * float
 * array
 * DataProviderInterface
