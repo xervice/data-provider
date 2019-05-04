@@ -90,7 +90,9 @@ class DataProviderBusinessFactory extends AbstractBusinessFactory
      */
     public function createXmlMerger(): XmlMergerInterface
     {
-        return new XmlMerger();
+        return new XmlMerger(
+            $this->getConfig()->getDataProviderNamespace()
+        );
     }
 
     /**

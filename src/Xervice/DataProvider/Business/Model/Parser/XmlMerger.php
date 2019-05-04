@@ -15,6 +15,19 @@ class XmlMerger implements XmlMergerInterface
     private $mergedXml = [];
 
     /**
+     * @var string
+     */
+    private $namespace;
+
+    /**
+     * @param string $namespace
+     */
+    public function __construct(string $namespace)
+    {
+        $this->namespace = $namespace;
+    }
+
+    /**
      * @param string $xmlContent
      */
     public function addXml(string $xmlContent): void
@@ -152,7 +165,8 @@ class XmlMerger implements XmlMergerInterface
     private function getVariableType(string $type): string
     {
         if (!$this->isSimpleType($type)) {
-            $type = '\DataProvider\\' . $type . 'DataProvider';
+            $namespace = ltrim($this->namespace, '\\');
+            $type =  '\\' . $namespace .'\\' . $type . 'DataProvider';
         }
 
         if ($type === 'DataProviderInterface') {
@@ -178,7 +192,8 @@ class XmlMerger implements XmlMergerInterface
     private function getSingleVariableType(string $type): string
     {
         if (!$this->isSimpleType($type)) {
-            $type = '\DataProvider\\' . $type . 'DataProvider';
+            $namespace = ltrim($this->namespace, '\\');
+            $type = '\\' . $namespace .'\\' . $type . 'DataProvider';
         }
 
         if ($type === 'DataProviderInterface') {

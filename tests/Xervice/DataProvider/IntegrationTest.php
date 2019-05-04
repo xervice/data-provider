@@ -324,7 +324,9 @@ class IntegrationTest extends \Codeception\Test\Unit
     public function testChangeDataProviderNamespace()
     {
         $generatedPath = __DIR__ . '/../../../src/Generated/DataTransferObject';
-        mkdir($generatedPath);
+        if(!is_dir($generatedPath)) {
+            mkdir($generatedPath);
+        }
         $namespace = 'DataProvider\\DataTransferObject';
         XerviceConfig::set(DataProviderConfig::DATA_PROVIDER_NAMESPACE, $namespace);
         XerviceConfig::set(DataProviderConfig::DATA_PROVIDER_GENERATED_PATH,$generatedPath);
