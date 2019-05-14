@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Xervice\DataProvider\Business\Model\Parser;
 
-use Xervice\DataProvider\Business\Model\DataProvider\AnyDataProvider;
 use Xervice\DataProvider\Business\Model\DataProvider\DataProviderInterface;
 
 class XmlMerger implements XmlMergerInterface
