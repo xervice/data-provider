@@ -26,7 +26,7 @@ class IntegrationTest extends \Codeception\Test\Unit
 
     protected function _before()
     {
-        XerviceConfig::getInstance()->getConfig()->set(
+        XerviceConfig::set(
             DataProviderConfig::DATA_PROVIDER_PATHS,
             [
                 __DIR__ . '/Schema'
@@ -34,6 +34,9 @@ class IntegrationTest extends \Codeception\Test\Unit
         );
 
         XerviceConfig::set(DataProviderConfig::FILE_PATTERN, '*.testprovider.xml');
+        XerviceConfig::set(DataProviderConfig::DATA_PROVIDER_NAMESPACE, 'DataProvider');
+        XerviceConfig::set(DataProviderConfig::DATA_PROVIDER_GENERATED_PATH, __DIR__. '/../../../src/Generated');
+
         $this->getFacade()->generateDataProvider();
     }
 
@@ -316,6 +319,56 @@ class IntegrationTest extends \Codeception\Test\Unit
         $this->assertArrayHasKey('setKeyValues', $testKeyValueCollectionMethodNames);
         $this->assertArrayHasKey('unsetKeyValues', $testKeyValueCollectionMethodNames);
         $this->assertArrayHasKey('hasKeyValues', $testKeyValueCollectionMethodNames);
+    }
+
+    public function testChangeDataProviderNamespace()
+    {
+        $generatedPath = __DIR__ . '/../../../src/Generated/DataTransferObject';
+        if(!is_dir($generatedPath)) {
+            mkdir($generatedPath);
+        }
+        $namespace = 'DataProvider\\DataTransferObject';
+        XerviceConfig::set(DataProviderConfig::DATA_PROVIDER_NAMESPACE, $namespace);
+        XerviceConfig::set(DataProviderConfig::DATA_PROVIDER_GENERATED_PATH,$generatedPath);
+        $this->getFacade()->generateDataProvider();
+
+        $this->assertTrue(class_exists(\DataProvider\DataTransferObject\TestKeyValueCollectionDataProvider::class));
+        $this->assertTrue(class_exists(\DataProvider\DataTransferObject\TestKeyValueDataProvider::class));
+
+
+        $testKeyValueCollection = [
+            'keyValues' => [
+                [
+                    'Key' => 'Two'
+                ],
+                [
+                    'Key' => 'Three'
+                ]
+            ],
+            'ChildValue' => [
+                'Key' => 'One'
+            ]
+        ];
+
+        $testKeyValueCollectionDataProvider = new \DataProvider\DataTransferObject\TestKeyValueCollectionDataProvider();
+        $testKeyValueCollectionDataProvider->fromArray($testKeyValueCollection);
+
+        $this->assertInstanceOf(
+            \DataProvider\DataTransferObject\TestKeyValueDataProvider::class,
+            $testKeyValueCollectionDataProvider->getChildValue()
+        );
+        $this->assertSame('One', $testKeyValueCollectionDataProvider->getChildValue()->getKey());
+
+        $this->assertInstanceOf(
+            \DataProvider\DataTransferObject\TestKeyValueDataProvider::class,
+            $testKeyValueCollectionDataProvider->getKeyValues()[0]
+        );
+        $this->assertInstanceOf(
+            \DataProvider\DataTransferObject\TestKeyValueDataProvider::class,
+            $testKeyValueCollectionDataProvider->getKeyValues()[1]
+        );
+        $this->assertSame('Two', $testKeyValueCollectionDataProvider->getKeyValues()[0]->getKey());
+        $this->assertSame('Three', $testKeyValueCollectionDataProvider->getKeyValues()[1]->getKey());
     }
 
     /**
