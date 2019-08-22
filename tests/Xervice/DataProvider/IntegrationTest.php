@@ -95,6 +95,27 @@ class IntegrationTest extends \Codeception\Test\Unit
         $this->assertEquals(
             '',
             $dataProvider->getEmptyText()
+        );$this->assertNull(
+            $dataProvider->getObject()
+        );
+    }
+
+    /**
+     * @group Xervice
+     * @group DataProvider
+     * @group Integration
+     */
+    public function textObject()
+    {
+        $object = new \stdClass();
+        $object->test = 'bar';
+
+        $defaultData = new DefaultDataProvider();
+        $defaultData->setObject($object);
+
+        $this->assertEquals(
+            'bar',
+            $defaultData->getObject()->test
         );
     }
 
