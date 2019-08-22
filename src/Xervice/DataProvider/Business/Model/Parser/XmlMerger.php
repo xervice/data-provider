@@ -94,10 +94,18 @@ class XmlMerger implements XmlMergerInterface
 
         $type = ($type !== 'double') ? $type : 'float';
 
+        $allowNull = (bool)$element->attributes()['allownull'];
+        $default = (string)$element->attributes()['default'];
+
+        if ($type === 'object') {
+            $allowNull = true;
+            $default = null;
+        }
+
         $data = [
             'name' => (string)$element->attributes()['name'],
-            'allownull' => (bool)$element->attributes()['allownull'],
-            'default' => (string)$element->attributes()['default'],
+            'allownull' => $allowNull,
+            'default' => $default,
             'type' => $this->getVariableType($type),
             'is_collection' => $this->isCollection($type),
             'is_dataprovider' => $this->isDataProvider($type),
@@ -147,6 +155,7 @@ class XmlMerger implements XmlMergerInterface
             'double',
             'float',
             'array',
+            'object',
             'DataProviderInterface',
             'DataProviderInterface[]',
             DataProviderInterface::class,
