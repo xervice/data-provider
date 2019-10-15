@@ -9,7 +9,7 @@ filter:
 
 build:
   environment:
-    php: 7.1
+    php: 7.2
 
     variables:
       APPLICATION_ENV: scrutinizer
