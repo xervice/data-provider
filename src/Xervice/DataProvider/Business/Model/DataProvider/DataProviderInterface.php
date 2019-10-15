@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace Xervice\DataProvider\Business\Model\DataProvider;
 
-/**
- * @method array getElements()
- */
+
 interface DataProviderInterface
 {
     /**
