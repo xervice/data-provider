@@ -10,7 +10,7 @@
   "require-dev": {
     "codeception/codeception": "*",
     "symfony/var-dumper": "*",
-    "phpstan/phpstan": "0.12.*-dev"
+    "phpstan/phpstan": "^0.12.0"
   },
   "require": {
     "php": ">=7.2.0",
