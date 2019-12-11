@@ -34,6 +34,8 @@ class CleanCommand extends AbstractCommand
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->getFacade()->cleanDataProvider();
+        
+        return 0;
     }
 
 }
