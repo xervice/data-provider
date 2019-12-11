@@ -28,7 +28,7 @@ class GenerateCommand extends AbstractCommand
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|void
+     * @return int
      * @throws \Nette\InvalidArgumentException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -41,6 +41,8 @@ class GenerateCommand extends AbstractCommand
                 $output->writeln($provider . ' generated');
             }
         }
+        
+        return 0;
     }
 
 }
