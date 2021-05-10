@@ -42,7 +42,7 @@ class DataProviderFinder implements DataProviderFinderInterface
 
         if (
             !is_writable($this->generatedPath)
-            && !mkdir($this->generatedPath, '0777', true)
+            && !mkdir($this->generatedPath, 0777, true)
             && !is_dir($this->generatedPath)
         ) {
             throw new GenerateDirectoryNotWriteable($this->generatedPath);
