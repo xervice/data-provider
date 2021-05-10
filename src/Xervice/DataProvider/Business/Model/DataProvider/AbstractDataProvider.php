@@ -28,11 +28,11 @@ abstract class AbstractDataProvider implements DataProviderInterface
     }
 
     /**
-     * @param \Xervice\DataProvider\Business\Model\DataProvider\DataProviderInterface $provider
+     * @param \Xervice\DataProvider\Business\Model\DataProvider\AbstractDataProvider $provider
      *
      * @return array
      */
-    private function convertToArray(DataProviderInterface $provider): array
+    private function convertToArray(AbstractDataProvider $provider): array
     {
         $data = [];
         foreach ($provider->getElements() as $element) {
@@ -91,7 +91,7 @@ abstract class AbstractDataProvider implements DataProviderInterface
             $anyDataProvider = new AnyDataProvider($provider->{$getMethod}());
             $data[$fieldname] = $anyDataProvider->toArray();
         }
-        elseif ($element['is_dataprovider'] && $provider->{$getMethod}() instanceof DataProviderInterface) {
+        elseif ($element['is_dataprovider'] && $provider->{$getMethod}() instanceof AbstractDataProvider) {
             $data[$fieldname] = $this->convertToArray($provider->{$getMethod}());
         }
         elseif ($element['is_collection']) {
