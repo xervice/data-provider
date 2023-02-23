@@ -7,6 +7,16 @@ namespace Xervice\DataProvider\Business\Model\DataProvider;
 abstract class AbstractDataProvider implements DataProviderInterface
 {
     /**
+     * @param array|null $data
+     */
+    function __construct(?array $data = NULL)
+    {
+        if ($data !== NULL) {
+            $this->fromArray($data);
+        }
+    }
+
+    /**
      * @return array
      */
     public function toArray(): array
