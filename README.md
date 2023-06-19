@@ -11,7 +11,7 @@ Data transfer objects for xervice packages.
 Installation
 ------------------
 ```
-composer require xervice/data-provider
+composer require robbel-dev/data-provider
 ```
 
 Configuration
