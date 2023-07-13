@@ -54,6 +54,11 @@ class IntegrationTest extends \Codeception\Test\Unit
                 'DefaultDataProvider.php',
                 'TestKeyValueDataProvider.php',
                 'TestKeyValueCollectionDataProvider.php',
+                'TestArrayOfStringsDataProvider.php',
+                'TestArrayOfIntsDataProvider.php',
+                'TestArrayOfFloatsDataProvider.php',
+                'TestArrayOfDoblesDataProvider.php',
+                'TestArrayOfBoolDataProvider.php',
                 'WildcardDataProvider.php',
                 'WithoutUnderlineConvertingDataProvider.php',
                 'WithUnderlineConvertingDataProvider.php'
@@ -172,6 +177,75 @@ class IntegrationTest extends \Codeception\Test\Unit
         $this->assertEquals(
             'Desc',
             $dataProvider->getDescription()
+        );
+    }
+
+    static function arrayOfSimpleTypesData() : array{
+        return [
+            'ArrayOfStrings' => [
+                'dataProvider' => 'TestArrayOfStrings',
+                'data' => [
+                    'default' => ['foo', 'bar']
+                ],
+                'expect'=>[
+                    'default' => ['foo', 'bar'],
+                    'with_default'=> ['a', 'b']
+                ]
+            ],
+            'TestArrayOfInts' => [
+                'dataProvider' => 'TestArrayOfInts',
+                'data' => [
+                    'default' => [42, 1337]
+                ],
+                'expect'=>[
+                    'default' => [42, 1337],
+                    'with_default'=> [1, 2, 3]
+                ]
+            ],
+            'TestArrayOfFloats' => [
+                'dataProvider' => 'TestArrayOfFloats',
+                'data' => [
+                    'default' => [4.2, 13.37, 0]
+                ],
+                'expect'=>[
+                    'default' => [4.2, 13.37, 0],
+                    'with_default'=> [1.1, 2.2, 3]
+                ]
+            ],
+            'TestArrayOfDobles' => [
+                'dataProvider' => 'TestArrayOfDobles',
+                'data' => [
+                    'default' => [4.2, 13.37, 0]
+                ],
+                'expect'=>[
+                    'default' => [4.2, 13.37, 0],
+                    'with_default'=> [1.1, 2.2, 3]
+                ]
+            ],
+            'TestArrayOfBool' => [
+                'dataProvider' => 'TestArrayOfBool',
+                'data' => [
+                    'default' => [false, true, 0, 1]
+                ],
+                'expect'=>[
+                    'default' => [false, true, false, true],
+                    'with_default'=> [true,false]
+                ]
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider arrayOfSimpleTypesData
+     */
+    public function testFromToArrayWithArrayOfSimpleTypes(string $dataProvider, array $data, array $expect)  {
+        $class = sprintf('\DataProvider\%sDataProvider', $dataProvider);
+        $dp = new $class($data);
+        $this->assertInstanceOf($class, $dp);
+
+        $this->assertEquals(
+            $dp->toArray(),
+            $expect
         );
     }
 

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<DataProviders
+  xmlns="xervice:dataprovider-01"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="xervice:dataprovider-01 http://static.xervice.online/schema/dataprovider.schema.xsd"
+>
+
+    <DataProvider name="TestArrayOfStrings">
+        <DataElement name="default" type="string[]"/>
+        <DataElement name="with_default" type="string[]" default="a,b"/>
+    </DataProvider>
+
+    <DataProvider name="TestArrayOfInts">
+        <DataElement name="default" type="int[]"/>
+        <DataElement name="with_default" type="int[]" default="1,2,3"/>
+    </DataProvider>
+
+    <DataProvider name="TestArrayOfFloats">
+        <DataElement name="default" type="float[]"/>
+        <DataElement name="with_default" type="float[]" default="1.1,2.2,3"/>
+    </DataProvider>
+
+    <DataProvider name="TestArrayOfDobles">
+        <DataElement name="default" type="double[]"/>
+        <DataElement name="with_default" type="double[]" default="1.1,2.2,3"/>
+    </DataProvider>
+
+    <DataProvider name="TestArrayOfBool">
+        <DataElement name="default" type="bool[]"/>
+        <DataElement name="with_default" type="bool[]" default="1,0"/>
+    </DataProvider>
+
+</DataProviders>
