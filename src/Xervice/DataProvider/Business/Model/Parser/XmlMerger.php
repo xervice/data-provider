@@ -150,10 +150,15 @@ class XmlMerger implements XmlMergerInterface
     {
         $validTypes = [
             'int',
+            'int[]',
             'string',
+            'string[]',
             'bool',
+            'bool[]',
             'double',
+            'double[]',
             'float',
+            'float[]',
             'array',
             'object',
             'DataProviderInterface',

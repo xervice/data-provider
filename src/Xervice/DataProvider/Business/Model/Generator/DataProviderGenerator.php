@@ -322,7 +322,20 @@ class DataProviderGenerator implements DataProviderGeneratorInterface
                 break;
         }
 
-        settype($default, $element['type']);
+        try {
+            settype($default, $element['type']);
+        } catch (\Throwable $e) {
+            if (strpos($element['type'], '[]') === false) {
+                throw $e;
+            }
+            $type = substr($element['type'], 0, -2);
+            $default = array_map(function ($v) use ($type) {
+                settype($v, $type);
+                return $v;
+            }, explode(',', $default));
+            settype($default, 'array');
+        }
+
         return $default;
     }
 
