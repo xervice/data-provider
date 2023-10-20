@@ -33,7 +33,7 @@ class DataProviderConfig extends AbstractConfig
      */
     public function getPaths(): array
     {
-        return $this->get(self::DATA_PROVIDER_PATHS, []);
+        return $this->get(self::DATA_PROVIDER_PATHS, ['./src/', './vendor/']);
     }
 
     /**
@@ -41,7 +41,7 @@ class DataProviderConfig extends AbstractConfig
      */
     public function getGeneratedPath(): string
     {
-        return $this->get(self::DATA_PROVIDER_GENERATED_PATH);
+        return $this->get(self::DATA_PROVIDER_GENERATED_PATH, './src/Generated');
     }
 
     /**
