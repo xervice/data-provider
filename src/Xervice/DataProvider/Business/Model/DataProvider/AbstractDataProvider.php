@@ -161,9 +161,14 @@ abstract class AbstractDataProvider implements DataProviderInterface
     private function setCollectionValues(array $data, array $element, string $fieldname): void
     {
         foreach ($data[$fieldname] as $childData) {
-            $dataProvider = new $element['singleton_type']();
-            $dataProvider->fromArray($childData);
-            $this->{$element['name']}[] = $dataProvider;
+        if(in_array($element['singleton_type'],["bool", "int", "float", "double", "string"])) {
+            settype($childData, $element['singleton_type']);
+            $value = $childData;
+        } else  {
+            $value = new $element['singleton_type']();
+            $value->fromArray($childData);
+        }
+            $this->{$element['name']}[] = $value;
         }
     }
 
@@ -205,7 +210,7 @@ abstract class AbstractDataProvider implements DataProviderInterface
     ): array {
         $data[$fieldname] = [];
         foreach ($provider->{$getMethod}() as $child) {
-            $data[$fieldname][] = $child->toArray();
+            $data[$fieldname][] = $child instanceof DataProviderInterface ? $child->toArray() : $child;
         }
         return $data;
     }

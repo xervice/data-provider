@@ -115,8 +115,9 @@ class XmlMerger implements XmlMergerInterface
         $singleton = (string)$element->attributes()['singleton'];
         if ($singleton !== '') {
             $data['singleton'] = (string)$element->attributes()['singleton'];
-            $data['singleton_type'] = $this->getSingleVariableType($type);
         }
+
+        $data['singleton_type'] = $this->getSingleVariableType($type);
 
         return $data;
     }
@@ -150,10 +151,15 @@ class XmlMerger implements XmlMergerInterface
     {
         $validTypes = [
             'int',
+            'int[]',
             'string',
+            'string[]',
             'bool',
+            'bool[]',
             'double',
+            'double[]',
             'float',
+            'float[]',
             'array',
             'object',
             'DataProviderInterface',
